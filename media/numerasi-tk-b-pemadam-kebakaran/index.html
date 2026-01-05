@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Kuis Numerasi Pemadam Kebakaran - Belajar berhitung dengan tema pemadam kebakaran">
+    <title>Kuis Pemadam Kebakaran 🚒 | MeCa</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/firefighter.css">
+</head>
+
+<body class="firefighter-theme">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="../../index.html" class="logo">MeCa</a>
+                <nav class="nav">
+                    <a href="../../index.html" class="nav-link">🏠 Beranda</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Section -->
+    <section class="section">
+        <div class="container">
+            <div class="quiz-container">
+                <!-- Quiz Header -->
+                <div class="quiz-header">
+                    <h1 class="quiz-title">🚒 Kuis Pemadam Kebakaran</h1>
+                    <p class="quiz-subtitle">Ayo belajar berhitung bersama pemadam kebakaran!</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar" style="width: 0%;">0/15</div>
+                </div>
+
+                <!-- Quiz Content -->
+                <div id="quiz-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="../../js/quiz-engine.js"></script>
+    <script>
+        // 15 Firefighter-themed Numeracy Questions for TK B
+        const firefighterQuestions = [
+            // COUNTING QUESTIONS (1-5)
+            {
+                question: "🚒 Hitung ada berapa mobil pemadam kebakaran di gambar ini!",
+                image: "images/count_firetrucks_3_1767598496088.png",
+                options: ["2", "3", "4", "5"],
+                correctAnswer: 1, // 3
+                explanation: "Benar! Ada 3 mobil pemadam kebakaran yang siap memadamkan api!"
+            },
+            {
+                question: "⛑️ Hitung berapa helm pemadam kebakaran yang kamu lihat!",
+                image: "images/count_helmets_4_1767598512427.png",
+                options: ["3", "4", "5", "6"],
+                correctAnswer: 1, // 4
+                explanation: "Tepat sekali! Ada 4 helm merah untuk para pemadam kebakaran!"
+            },
+            {
+                question: "🔥 Berapa banyak api yang harus dipadamkan? Hitung ya!",
+                image: "images/count_fires_7_1767598530308.png",
+                options: ["5", "6", "7", "8"],
+                correctAnswer: 2, // 7
+                explanation: "Benar! Ada 7 api yang harus dipadamkan oleh pemadam kebakaran!"
+            },
+            {
+                question: "👨‍🚒 Hitung berapa pemadam kebakaran yang ada di gambar!",
+                image: "images/count_firefighters_6_1767598583887.png",
+                options: ["4", "5", "6", "7"],
+                correctAnswer: 2, // 6
+                explanation: "Hebat! Benar ada 6 pemadam kebakaran yang siap beraksi!"
+            },
+            {
+                question: "🧯 Berapa banyak alat pemadam api yang ada? Hitung dengan teliti!",
+                image: "images/count_extinguishers_8_1767598600576.png",
+                options: ["6", "7", "8", "9"],
+                correctAnswer: 2, // 8
+                explanation: "Pintar! Ada 8 alat pemadam api yang siap digunakan!"
+            },
+
+            // MORE COUNTING QUESTIONS (6-10)
+            {
+                question: "💧 Hitung ada berapa selang air pemadam kebakaran!",
+                image: "images/count_hoses_5_1767598615569.png",
+                options: ["3", "4", "5", "6"],
+                correctAnswer: 2, // 5
+                explanation: "Benar! Ada 5 selang air untuk memadamkan api!"
+            },
+            {
+                question: "👢 Berapa banyak sepatu boot pemadam kebakaran yang kamu lihat?",
+                image: "images/count_boots_10_1767598635512.png",
+                options: ["8", "9", "10", "11"],
+                correctAnswer: 2, // 10
+                explanation: "Hebat! Ada 10 sepatu boot untuk para pemadam kebakaran!"
+            },
+            {
+                question: "🪓 Hitung berapa kapak pemadam kebakaran yang ada!",
+                image: "images/count_axes_2_1767598652753.png",
+                options: ["1", "2", "3", "4"],
+                correctAnswer: 1, // 2
+                explanation: "Tepat! Ada 2 kapak untuk membantu pemadam kebakaran!"
+            },
+            {
+                question: "🚒 Lihat gambar ini! Berapa mobil pemadam kebakaran yang ada?",
+                image: "images/count_firetrucks_3_1767598496088.png",
+                options: ["2", "3", "4", "5"],
+                correctAnswer: 1, // 3
+                explanation: "Pintar! Benar ada 3 mobil pemadam kebakaran!"
+            },
+            {
+                question: "🔥 Hitung berapa api yang sedang menyala!",
+                image: "images/count_fires_7_1767598530308.png",
+                options: ["5", "6", "7", "8"],
+                correctAnswer: 2, // 7
+                explanation: "Benar sekali! Ada 7 api yang menyala!"
+            },
+
+            // SIMPLE MATH - ADDITION (11-13)
+            {
+                question: "➕ Lihat gambar! Berapa total pemadam kebakaran jika digabungkan?",
+                image: "images/addition_visual_3_plus_2_1767598668705.png",
+                options: ["4", "5", "6", "7"],
+                correctAnswer: 1, // 5
+                explanation: "Benar! 3 pemadam kebakaran + 2 pemadam kebakaran = 5 pemadam kebakaran!"
+            },
+            {
+                question: "➕ Hitung total selang air jika semuanya digabung!",
+                image: "images/addition_visual_4_plus_3_1767598686165.png",
+                options: ["5", "6", "7", "8"],
+                correctAnswer: 2, // 7
+                explanation: "Pintar! 4 selang + 3 selang = 7 selang air!"
+            },
+            {
+                question: "➕ Berapa total mobil pemadam kebakaran jika digabungkan?",
+                image: "images/addition_visual_2_plus_1_1767598702092.png",
+                options: ["2", "3", "4", "5"],
+                correctAnswer: 1, // 3
+                explanation: "Hebat! 2 mobil + 1 mobil = 3 mobil pemadam kebakaran!"
+            },
+
+            // SIMPLE MATH - SUBTRACTION (14-15)
+            {
+                question: "➖ Berapa api yang masih menyala? (Yang dicoret sudah padam)",
+                image: "images/subtraction_visual_6_minus_2_1767598728593.png",
+                options: ["3", "4", "5", "6"],
+                correctAnswer: 1, // 4
+                explanation: "Benar! Ada 6 api, 2 sudah padam, jadi masih ada 4 api yang menyala!"
+            },
+            {
+                question: "➖ Berapa helm yang masih tersisa? (Yang dicoret sudah dipakai)",
+                image: "images/subtraction_visual_8_minus_3_1767598752557.png",
+                options: ["4", "5", "6", "7"],
+                correctAnswer: 1, // 5
+                explanation: "Pintar! Ada 8 helm, 3 sudah dipakai, jadi masih ada 5 helm tersisa!"
+            }
+        ];
+
+        // Initialize quiz when page loads
+        let quiz;
+        document.addEventListener('DOMContentLoaded', function () {
+            quiz = new QuizEngine(firefighterQuestions, 'quiz-content');
+            quiz.init();
+        });
+    </script>
+</body>
+
+</html>

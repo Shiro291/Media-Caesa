@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MeCa (Media Caesa) - Platform edukasi interaktif untuk anak-anak Indonesia">
+    <title>MeCa - Media Caesa | Platform Edukasi Anak</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">MeCa</a>
+                <nav class="nav">
+                    <a href="#beranda" class="nav-link">Beranda</a>
+                    <a href="#media" class="nav-link">Media Pembelajaran</a>
+                    <a href="#tentang" class="nav-link">Tentang</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero section">
+        <div class="container">
+            <h1 class="hero-title">Selamat Datang di MeCa</h1>
+            <p class="hero-subtitle">Media Caesa - Platform Edukasi Interaktif untuk Anak Indonesia</p>
+            <p style="color: var(--gray); max-width: 600px; margin: 0 auto var(--spacing-xl);">
+                Belajar sambil bermain dengan berbagai media pembelajaran yang menyenangkan dan edukatif!
+            </p>
+            <a href="#media" class="btn btn-primary btn-large">Mulai Belajar</a>
+        </div>
+    </section>
+
+    <!-- Media Library Section -->
+    <section id="media" class="section">
+        <div class="container">
+            <h2 class="text-center">Media Pembelajaran</h2>
+            <p class="text-center" style="color: var(--gray); margin-bottom: var(--spacing-xl);">
+                Pilih media pembelajaran yang sesuai dengan kebutuhan belajar anak
+            </p>
+            
+            <div class="media-grid">
+                <!-- Firefighter Numeracy Card -->
+                <div class="card">
+                    <img src="media/numerasi-tk-b-pemadam-kebakaran/preview.jpg" alt="Numerasi Pemadam Kebakaran" class="card-image" id="firefighter-preview">
+                    <h3 class="card-title">🚒 Numerasi: Pemadam Kebakaran</h3>
+                    <p class="card-description">
+                        Belajar berhitung dengan tema pemadam kebakaran yang seru! Cocok untuk anak TK B.
+                    </p>
+                    <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="background: rgba(59, 130, 246, 0.2); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.9rem;">TK B</span>
+                        <span style="background: rgba(251, 146, 60, 0.2); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.9rem;">Numerasi</span>
+                        <span style="background: rgba(252, 211, 77, 0.2); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.9rem;">15 Soal</span>
+                    </div>
+                    <a href="media/numerasi-tk-b-pemadam-kebakaran/index.html" class="btn btn-secondary" style="width: 100%;">Mulai Kuis</a>
+                </div>
+
+                <!-- Placeholder for future media -->
+                <div class="card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="card-image" style="background: linear-gradient(135deg, var(--accent-black), var(--secondary-black)); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem;">🚀</span>
+                    </div>
+                    <h3 class="card-title">Segera Hadir!</h3>
+                    <p class="card-description">
+                        Media pembelajaran baru akan segera ditambahkan. Nantikan ya!
+                    </p>
+                    <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="background: rgba(100, 116, 139, 0.2); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.9rem;">Coming Soon</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>Segera Hadir</button>
+                </div>
+
+                <div class="card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="card-image" style="background: linear-gradient(135deg, var(--accent-black), var(--secondary-black)); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 3rem;">🎨</span>
+                    </div>
+                    <h3 class="card-title">Segera Hadir!</h3>
+                    <p class="card-description">
+                        Media pembelajaran baru akan segera ditambahkan. Nantikan ya!
+                    </p>
+                    <div style="display: flex; gap: var(--spacing-sm); flex-wrap: wrap; margin-bottom: var(--spacing-md);">
+                        <span style="background: rgba(100, 116, 139, 0.2); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.9rem;">Coming Soon</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>Segera Hadir</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tentang" class="section">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2>Tentang MeCa</h2>
+                <p style="color: var(--gray); font-size: 1.1rem; line-height: 1.8;">
+                    <strong style="color: var(--primary-blue-light);">Media Caesa (MeCa)</strong> adalah platform edukasi interaktif yang dirancang khusus untuk anak-anak Indonesia. 
+                    Kami menyediakan berbagai media pembelajaran yang menyenangkan, edukatif, dan mudah digunakan.
+                </p>
+                <p style="color: var(--gray); font-size: 1.1rem; line-height: 1.8; margin-top: var(--spacing-md);">
+                    Setiap media pembelajaran dirancang dengan tema yang menarik dan interaktif, 
+                    membantu anak-anak belajar sambil bermain dengan pengalaman yang menyenangkan.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--primary-black); padding: var(--spacing-xl) 0; margin-top: var(--spacing-2xl); border-top: 2px solid var(--primary-blue);">
+        <div class="container text-center">
+            <div class="logo" style="margin-bottom: var(--spacing-md);">MeCa</div>
+            <p style="color: var(--gray);">Media Caesa - Platform Edukasi Anak Indonesia</p>
+            <p style="color: var(--gray-dark); font-size: 0.9rem; margin-top: var(--spacing-sm);">
+                © 2026 MeCa. Dibuat dengan ❤️ untuk anak-anak Indonesia
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
