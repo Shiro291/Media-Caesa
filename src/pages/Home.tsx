@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Play, Rocket, BookOpen, Calculator } from 'lucide-react';
+import { Play, Rocket, Calculator } from 'lucide-react';
 
 export default function Home() {
     return (

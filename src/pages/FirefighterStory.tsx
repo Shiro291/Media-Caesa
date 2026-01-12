@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const slides = [
     {
         id: 1,
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-6">
                 <h1 className="text-4xl md:text-6xl font-bold text-brand-red animate-bounce">
                     👨‍🚒 Halo Teman-Teman!
@@ -28,7 +28,7 @@ const slides = [
     {
         id: 2,
         bg: 'bg-gray-800',
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-8">
                 <h2 className="text-3xl text-brand-yellow">Di Kantor Pemadam 🔥</h2>
                 <div
@@ -46,7 +46,7 @@ const slides = [
     {
         id: 3,
         bg: 'bg-red-900', // Fire scene
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-6">
                 <h1 className="text-5xl text-red-500 font-black tracking-widest animate-pulse">
                     KEBAKARAN!
@@ -60,7 +60,7 @@ const slides = [
     },
     {
         id: 4,
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-4">
                 <h2 className="text-3xl text-brand-blue">Ayo Bersiap! 🧥</h2>
                 <div className="flex justify-center gap-4">
@@ -82,7 +82,7 @@ const slides = [
     },
     {
         id: 5,
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-6">
                 <h2 className="text-3xl text-brand-red">Berangkat! 🚒</h2>
                 <div
@@ -104,7 +104,7 @@ const slides = [
     {
         id: 6,
         bg: 'bg-orange-900',
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-6">
                 <h2 className="text-4xl text-orange-400">Api Besar! 🔥</h2>
                 <div className="flex justify-center gap-4">
@@ -122,7 +122,7 @@ const slides = [
     {
         id: 7,
         bg: 'bg-blue-900',
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-6">
                 <h2 className="text-3xl text-blue-300">Semprotkan Air! 💦</h2>
                 <div className="flex items-center justify-center gap-8">
@@ -145,7 +145,7 @@ const slides = [
     {
         id: 8,
         bg: 'bg-green-900',
-        content: (playSound: any) => (
+        content: ({ playSound }: any) => (
             <div className="text-center space-y-6">
                 <h2 className="text-4xl text-green-400">Api Padam! 💨</h2>
                 <div className="text-8xl animate-pulse opacity-50">🌫️</div>
@@ -164,7 +164,7 @@ const slides = [
     },
     {
         id: 9, // End
-        content: (playSound: any) => (
+        content: () => (
             <div className="text-center space-y-6">
                 <h1 className="text-5xl text-brand-red font-bold">TAMAT</h1>
                 <div className="text-6xl">👋 🚒</div>
@@ -199,7 +199,7 @@ export default function FirefighterStory() {
     }, [initAudio]);
 
     const CurrentContent = slides[currentSlide].content;
-    const slideBg = slides[currentSlide].bg || 'bg-brand-bg';
+
 
     return (
         <div className={`min-h-screen w-full flex flex-col items-center justify-center p-4 transition-colors duration-500 ${currentSlide === 2 || currentSlide === 5 ? 'bg-black' : 'bg-gray-900'}`}>
