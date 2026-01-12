@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSound } from '../hooks/useSound';
-import { Home, ArrowLeft, ArrowRight, Volume2 } from 'lucide-react';
+import { useSound } from '../../hooks/useSound';
+import MediaShell from '../../components/layout/MediaShell';
+import GameControls from '../../components/ui/GameControls';
 import { Link } from 'react-router-dom';
+import type { PlaySound } from '../../types';
 
 const slides = [
     {
         id: 1,
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-6">
                 <h1 className="text-4xl md:text-6xl font-bold text-brand-red animate-bounce">
                     👨‍🚒 Halo Teman-Teman!
@@ -28,7 +30,7 @@ const slides = [
     {
         id: 2,
         bg: 'bg-gray-800',
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-8">
                 <h2 className="text-3xl text-brand-yellow">Di Kantor Pemadam 🔥</h2>
                 <div
@@ -46,7 +48,7 @@ const slides = [
     {
         id: 3,
         bg: 'bg-red-900', // Fire scene
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-6">
                 <h1 className="text-5xl text-red-500 font-black tracking-widest animate-pulse">
                     KEBAKARAN!
@@ -60,7 +62,7 @@ const slides = [
     },
     {
         id: 4,
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-4">
                 <h2 className="text-3xl text-brand-blue">Ayo Bersiap! 🧥</h2>
                 <div className="flex justify-center gap-4">
@@ -82,7 +84,7 @@ const slides = [
     },
     {
         id: 5,
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-6">
                 <h2 className="text-3xl text-brand-red">Berangkat! 🚒</h2>
                 <div
@@ -104,7 +106,7 @@ const slides = [
     {
         id: 6,
         bg: 'bg-orange-900',
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-6">
                 <h2 className="text-4xl text-orange-400">Api Besar! 🔥</h2>
                 <div className="flex justify-center gap-4">
@@ -122,7 +124,7 @@ const slides = [
     {
         id: 7,
         bg: 'bg-blue-900',
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-6">
                 <h2 className="text-3xl text-blue-300">Semprotkan Air! 💦</h2>
                 <div className="flex items-center justify-center gap-8">
@@ -145,7 +147,7 @@ const slides = [
     {
         id: 8,
         bg: 'bg-green-900',
-        content: ({ playSound }: any) => (
+        content: ({ playSound }: { playSound: PlaySound }) => (
             <div className="text-center space-y-6">
                 <h2 className="text-4xl text-green-400">Api Padam! 💨</h2>
                 <div className="text-8xl animate-pulse opacity-50">🌫️</div>
@@ -169,8 +171,8 @@ const slides = [
                 <h1 className="text-5xl text-brand-red font-bold">TAMAT</h1>
                 <div className="text-6xl">👋 🚒</div>
                 <p className="text-xl">Ingat ya, jangan bermain api! 🔥❌</p>
-                <Link to="/" className="inline-block bg-white/10 px-6 py-3 rounded-xl hover:bg-white/20 transition">
-                    Kembali ke Menu Utama 🏠
+                <Link to="/library" className="inline-block bg-white/10 px-6 py-3 rounded-xl hover:bg-white/20 transition">
+                    Kembali ke Pustaka 🏠
                 </Link>
             </div>
         )
@@ -199,64 +201,36 @@ export default function FirefighterStory() {
     }, [initAudio]);
 
     const CurrentContent = slides[currentSlide].content;
-
+    const slideBg = slides[currentSlide].bg || 'bg-brand-bg';
 
     return (
-        <div className={`min-h-screen w-full flex flex-col items-center justify-center p-4 transition-colors duration-500 ${currentSlide === 2 || currentSlide === 5 ? 'bg-black' : 'bg-gray-900'}`}>
+        <MediaShell
+            title="Cerita Budi"
+            currentSlide={currentSlide}
+            totalSlides={slides.length}
+            bgClass={slideBg}
+            onSoundToggle={() => playSound('click')}
+        >
+            <AnimatePresence mode='wait'>
+                <motion.div
+                    key={currentSlide}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col items-center justify-center p-4 md:p-8 max-w-4xl w-full"
+                >
+                    <CurrentContent playSound={playSound} />
+                </motion.div>
+            </AnimatePresence>
 
-            {/* Aspect Ratio Container for Presentation Feel */}
-            <div className="relative w-full max-w-5xl aspect-video bg-gray-800 rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-700 flex flex-col">
-
-                {/* Top Controls */}
-                <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10 pointer-events-none">
-                    <Link to="/" className="pointer-events-auto bg-white/20 backdrop-blur p-2 rounded-full hover:bg-white/30 transition">
-                        <Home size={24} />
-                    </Link>
-                    <div className="bg-black/50 px-4 py-1 rounded-full text-sm font-mono backdrop-blur">
-                        {currentSlide + 1} / {slides.length}
-                    </div>
-                    <div className="pointer-events-auto bg-white/20 backdrop-blur p-2 rounded-full hover:bg-white/30 transition cursor-pointer" onClick={() => playSound('siren')}>
-                        <Volume2 size={24} />
-                    </div>
-                </div>
-
-                {/* Slide Content */}
-                <div className={`flex-1 flex items-center justify-center relative overflow-hidden ${currentSlide === 0 ? 'bg-brand-bg' : ''}`}>
-                    <AnimatePresence mode='wait'>
-                        <motion.div
-                            key={currentSlide}
-                            initial={{ opacity: 0, x: 100 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -100 }}
-                            transition={{ duration: 0.5 }}
-                            className={`absolute inset-0 flex flex-col items-center justify-center p-8 ${slides[currentSlide].bg || ''}`}
-                        >
-                            <CurrentContent playSound={playSound} />
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-
-                {/* Bottom Nav */}
-                <div className="h-20 bg-gray-900/50 backdrop-blur-md flex items-center justify-between px-8">
-                    <button
-                        onClick={prevSlide}
-                        disabled={currentSlide === 0}
-                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:cursor-not-allowed transition"
-                    >
-                        <ArrowLeft size={20} /> Sebelumnya
-                    </button>
-
-                    <button
-                        onClick={nextSlide}
-                        disabled={currentSlide === slides.length - 1}
-                        className="flex items-center gap-2 px-6 py-2 rounded-full bg-brand-blue hover:bg-blue-600 font-bold disabled:opacity-30 disabled:cursor-not-allowed transition shadow-lg hover:shadow-blue-500/50"
-                    >
-                        {currentSlide === 0 ? 'Mulai Cerita' : 'Selanjutnya'} <ArrowRight size={20} />
-                    </button>
-                </div>
-            </div>
-
-            <p className="mt-4 text-gray-500 text-sm">Gunakan tombol panah untuk navigasi</p>
-        </div>
+            <GameControls
+                onNext={nextSlide}
+                onPrev={prevSlide}
+                canNext={currentSlide < slides.length - 1}
+                canPrev={currentSlide > 0}
+                nextLabel={currentSlide === 0 ? 'Mulai' : 'Lanjut'}
+            />
+        </MediaShell>
     );
 }

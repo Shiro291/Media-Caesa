@@ -7,7 +7,8 @@ export const useSound = () => {
 
     const initAudio = useCallback(() => {
         if (!audioCtxRef.current) {
-            audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+            const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+            audioCtxRef.current = new AudioContextClass();
         }
         if (audioCtxRef.current.state === 'suspended') {
             audioCtxRef.current.resume();
@@ -76,7 +77,6 @@ export const useSound = () => {
 
             case 'fire':
                 playNoise(ctx, 2.0, 'highpass');
-                createCrackles(ctx, 10);
                 break;
         }
     }, [initAudio]);
@@ -118,19 +118,4 @@ function playNoise(ctx: AudioContext, duration: number, filterType: 'lowpass' | 
     noise.start();
 }
 
-function createCrackles(ctx: AudioContext, count: number) {
-    for (let i = 0; i < count; i++) {
-        const t = ctx.currentTime + Math.random();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = 'square';
-        osc.frequency.value = 800 + Math.random() * 500;
-        gain.gain.value = 0.05;
 
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(t);
-        osc.stop(t + 0.05);
-    }
-}
