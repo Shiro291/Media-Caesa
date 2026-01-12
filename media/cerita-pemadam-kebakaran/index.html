@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Pemadam Kebakaran</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="presentation-container">
+        <!-- Controls -->
+        <div class="controls">
+            <button id="prevBtn" class="nav-btn">❮ Sebelumnya</button>
+            <span id="slide-indicator">Halaman 1 / 10</span>
+            <button id="nextBtn" class="nav-btn">Selanjutnya ❯</button>
+        </div>
+
+        <div class="slides-wrapper">
+
+            <!-- Slide 1: Intro -->
+            <div class="slide active" data-slide="1">
+                <center>
+                    <h1>👨‍🚒 Halo Teman-Teman!</h1>
+                    <img src="images/character.png" alt="Budi Pemadam" class="character-img"
+                        onclick="playSound('success')">
+                    <h2>Aku Budi, si Pemadam Kebakaran.</h2>
+                    <button class="action-btn" onclick="nextSlide()">Mulai Cerita 📖</button>
+                </center>
+            </div>
+
+            <!-- Slide 2: Station -->
+            <div class="slide" data-slide="2">
+                <div class="slide-content">
+                    <h2>Di Kantor Pemadam 🔥</h2>
+                    <p class="story-text">
+                        Hari ini cerah sekali. Budi sedang membersihkan truknya.<br>
+                        Tiba-tiba...
+                    </p>
+                    <div style="font-size: 8rem; cursor: pointer;" onclick="playSound('siren')" class="shake-anim">☎️
+                    </div>
+                    <p class="story-text">
+                        <span class="clickable-word" onclick="playSound('siren')">Kring! Kring!</span> Ada telepon
+                        darurat!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Alarm -->
+            <div class="slide scene-fire" data-slide="3">
+                <center>
+                    <h1 style="color:red" class="shake-anim">KEBAKARAN!</h1>
+                    <div style="font-size: 6rem; margin: 2rem;">🚨</div>
+                    <p class="story-text">
+                        Alarm berbunyi! <strong onclick="playSound('siren')" class="clickable-word">NGUING!
+                            NGUING!</strong><br>
+                        Ada api di toko roti!
+                    </p>
+                </center>
+            </div>
+
+            <!-- Slide 4: Preparation -->
+            <div class="slide" data-slide="4">
+                <center>
+                    <h2>Ayo Bersiap! 🧥</h2>
+                    <img src="images/character.png" class="character-img" style="height: 30vh">
+                    <p class="story-text">
+                        Budi memakai <span class="clickable-word" onclick="playSound('click')">Helm ⛑️</span>.<br>
+                        Budi memakai <span class="clickable-word" onclick="playSound('click')">Jaket 🧥</span>.<br>
+                        Budi memakai <span class="clickable-word" onclick="playSound('click')">Sepatu Bot 👢</span>.
+                    </p>
+                    <p><i>(Klik barang-barang Budi!)</i></p>
+                </center>
+            </div>
+
+            <!-- Slide 5: Truck -->
+            <div class="slide" data-slide="5">
+                <center>
+                    <h2>Berangkat! 🚒</h2>
+                    <div style="font-size: 8rem; transform: scaleX(-1); display:inline-block;"
+                        onclick="playSound('engine')">🚒</div>
+                    <p class="story-text">
+                        Nyalakan mesin truk! <br>
+                        <button class="nav-btn" onclick="playSound('engine')">Brum Brum! 🔊</button>
+                    </p>
+                    <p class="story-text">Budi melaju cepat sekali! Wuuuuzzz!</p>
+                </center>
+            </div>
+
+            <!-- Slide 6: The Fire -->
+            <div class="slide scene-fire" data-slide="6">
+                <center>
+                    <h2>Api Besar! 🔥</h2>
+                    <div>
+                        <span class="fire-emoji" onclick="playSound('fire')">🔥</span>
+                        <span class="fire-emoji" onclick="playSound('fire')" style="animation-delay: 0.2s">🔥</span>
+                        <span class="fire-emoji" onclick="playSound('fire')" style="animation-delay: 0.5s">🔥</span>
+                    </div>
+                    <p class="story-text">
+                        Wah, apinya panas sekali!<br>
+                        Dengar suaranya... <span class="clickable-word" onclick="playSound('fire')">Kretek
+                            kretek!</span>
+                    </p>
+                    <p>Jangan dekat-dekat ya!</p>
+                </center>
+            </div>
+
+            <!-- Slide 7: Action -->
+            <div class="slide scene-water" data-slide="7">
+                <center>
+                    <h2>Semprotkan Air! 💦</h2>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                        <img src="images/character.png" style="height: 30vh;">
+                        <div style="font-size: 4rem;">🚿</div>
+                        <div class="fire-emoji">🔥</div>
+                    </div>
+                    <p class="story-text">
+                        Ayo bantu Budi!<br>
+                        Klik tombol di bawah ini untuk menyemprot air!
+                    </p>
+                    <button class="action-btn" onmousedown="playSound('water')" onmouseup="playSound('click')">
+                        💦 SEMPROT AIR! 💦
+                    </button>
+                </center>
+            </div>
+
+            <!-- Slide 8: Fire Out -->
+            <div class="slide scene-water" data-slide="8">
+                <center>
+                    <h2>Api Padam! 💨</h2>
+                    <div style="font-size: 6rem;">🌫️ 🌫️</div>
+                    <p class="story-text">
+                        Fiuh... Syukurlah.<br>
+                        Api sudah padam karena air yang dingin.
+                    </p>
+                    <p class="story-text">
+                        Toko roti selamat! Hore!
+                        <button class="nav-btn" onclick="playSound('success')">Hore! 🎉</button>
+                    </p>
+                </center>
+            </div>
+
+            <!-- Slide 9: Going Home -->
+            <div class="slide" data-slide="9">
+                <center>
+                    <h2>Kerja Bagus! 👍</h2>
+                    <img src="images/character.png" class="character-img" style="height: 35vh"
+                        onclick="playSound('success')">
+                    <p class="story-text">
+                        Terima kasih sudah membantu Budi.<br>
+                        Sekarang saatnya pulang dan istirahat.
+                    </p>
+                    <div style="font-size: 4rem;">👋 🚒</div>
+                </center>
+            </div>
+
+            <!-- Slide 10: End -->
+            <div class="slide" data-slide="10">
+                <center>
+                    <h1>TAMAT</h1>
+                    <p>Ingat ya, jangan bermain api! 🔥❌</p>
+                    <button class="action-btn" onclick="location.reload()">Main Lagi 🔄</button>
+                    <br><br>
+                    <a href="../../index.html" class="nav-btn" style="text-decoration: none;">Kembali ke Menu Utama
+                        🏠</a>
+                </center>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
