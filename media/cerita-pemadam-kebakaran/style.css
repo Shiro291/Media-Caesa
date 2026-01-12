@@ -260,3 +260,60 @@ p.story-text {
 .hidden {
     display: none;
 }
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .presentation-container {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+        aspect-ratio: auto;
+        /* Allow full screen on mobile */
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    p.story-text {
+        font-size: 1.2rem;
+        padding: 1rem;
+        width: 90%;
+    }
+
+    .character-img {
+        height: 30vh;
+    }
+
+    .controls {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+    }
+
+    .nav-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .action-btn {
+        padding: 1rem 2rem;
+        font-size: 1.5rem;
+        width: 80%;
+        /* Easier to tap */
+    }
+
+    .fire-emoji {
+        font-size: 3rem;
+    }
+
+    .slide {
+        padding: 1rem;
+    }
+}
