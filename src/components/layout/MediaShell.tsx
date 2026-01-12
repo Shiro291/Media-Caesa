@@ -28,7 +28,7 @@ export default function MediaShell({
                 {/* Left: Home */}
                 <Link
                     to="/library"
-                    className="pointer-events-auto bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition shadow-lg text-white group"
+                    className="pointer-events-auto bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition shadow-lg text-white group ring-2 ring-black"
                 >
                     <Home size={28} className="group-hover:scale-110 transition-transform" />
                 </Link>

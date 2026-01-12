@@ -2,24 +2,32 @@ import { Link } from 'react-router-dom';
 import { Play } from 'lucide-react';
 
 export default function Home() {
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans selection:bg-brand-orange selection:text-white flex flex-col">
             {/* Header */}
             <header className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
                 <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-red bg-clip-text text-transparent">
-                        MeCa
+                    <div className="flex items-center gap-3">
+                        <img src="/meca_logo.png" alt="MeCa Logo" className="h-10 w-10 object-contain" />
+                        <div className="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-red bg-clip-text text-transparent">
+                            MeCa
+                        </div>
                     </div>
                     <nav className="hidden md:flex gap-8 text-gray-400">
                         <a href="#" className="text-white font-bold transition">Beranda</a>
                         <Link to="/library" className="hover:text-white transition">Pustaka Media</Link>
-                        <a href="#" className="hover:text-white transition">Tentang</a>
+                        <button onClick={() => scrollToSection('tentang')} className="hover:text-white transition">Tentang</button>
                     </nav>
                 </div>
             </header>
 
             {/* Hero */}
-            <section className="flex-1 flex flex-col items-center justify-center px-6 text-center pt-20">
+            <section className="flex-1 flex flex-col items-center justify-center px-6 text-center pt-32 pb-20">
                 <div className="mb-8 relative">
                     <div className="absolute -inset-4 bg-brand-blue rounded-full opacity-20 blur-3xl animate-pulse"></div>
                     <img src="/assets/firefighter/character.png" alt="Meca Mascot" className="relative h-48 md:h-64 object-contain animate-float" />
@@ -42,18 +50,42 @@ export default function Home() {
                         Mulai Belajar
                     </Link>
 
-                    <a
-                        href="#"
+                    <button
+                        onClick={() => scrollToSection('tentang')}
                         className="hidden md:inline-flex items-center gap-3 bg-white/5 border border-white/10 px-10 py-5 rounded-full text-xl font-bold hover:bg-white/10 transition"
                     >
                         Pelajari Lebih Lanjut
-                    </a>
+                    </button>
+                </div>
+            </section>
+
+            {/* About Section */}
+            <section id="tentang" className="py-20 bg-gray-800/50">
+                <div className="container mx-auto px-6 max-w-4xl text-center">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-8">Tentang MeCa</h2>
+                    <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-6">
+                        <strong className="text-brand-blue">Media Caesa (MeCa)</strong> adalah platform edukasi interaktif yang dirancang khusus untuk anak-anak Indonesia.
+                        Kami menyediakan berbagai media pembelajaran yang menyenangkan, edukatif, dan mudah digunakan.
+                    </p>
+                    <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
+                        Setiap media pembelajaran dirancang dengan tema yang menarik dan interaktif,
+                        membantu anak-anak belajar sambil bermain dengan pengalaman yang menyenangkan.
+                    </p>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="py-8 text-center text-gray-600 border-t border-gray-800">
-                <p>&copy; 2026 MeCa (Media Caesa). Built with React & Vite.</p>
+            <footer className="py-10 text-center border-t border-gray-800 bg-gray-900 z-10">
+                <div className="container mx-auto px-6">
+                    <div className="flex items-center justify-center gap-2 mb-4">
+                        <img src="/meca_logo.png" alt="MeCa Logo" className="h-8 w-8 object-contain opacity-80" />
+                        <span className="text-xl font-bold text-gray-300">MeCa</span>
+                    </div>
+                    <p className="text-gray-500 mb-2">Media Caesa - Platform Edukasi Anak Indonesia</p>
+                    <p className="text-gray-600 text-sm">
+                        © 2026 MeCa (Media Caesa). Built with React & Vite.
+                    </p>
+                </div>
             </footer>
         </div>
     );
