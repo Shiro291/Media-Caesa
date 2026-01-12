@@ -13,10 +13,7 @@ export default function Home() {
             <header className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
                 <div className="container mx-auto px-6 h-20 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <img src="/meca_logo.png" alt="MeCa Logo" className="h-10 w-10 object-contain" />
-                        <div className="text-2xl font-bold bg-gradient-to-r from-brand-blue to-brand-red bg-clip-text text-transparent">
-                            MeCa
-                        </div>
+                        <img src="/meca_logo.png" alt="MeCa Logo" className="h-10 w-auto object-contain" />
                     </div>
                     <nav className="hidden md:flex gap-8 text-gray-400">
                         <a href="#" className="text-white font-bold transition">Beranda</a>
@@ -78,15 +75,14 @@ export default function Home() {
             <footer className="py-10 text-center border-t border-gray-800 bg-gray-900 z-10">
                 <div className="container mx-auto px-6">
                     <div className="flex items-center justify-center gap-2 mb-4">
-                        <img src="/meca_logo.png" alt="MeCa Logo" className="h-8 w-8 object-contain opacity-80" />
-                        <span className="text-xl font-bold text-gray-300">MeCa</span>
+                        <img src="/meca_logo.png" alt="MeCa Logo" className="h-12 w-auto object-contain" />
                     </div>
                     <p className="text-gray-500 mb-2">Media Caesa - Platform Edukasi Anak Indonesia</p>
                     <p className="text-gray-600 text-sm">
-                        © 2026 MeCa (Media Caesa). Built with React & Vite.
+                        © 2026 MeCa (Media Caesa). Dibuat dengan ❤️ untuk Anak Bangsa.
                     </p>
                 </div>
-            </footer>
-        </div>
+            </footer >
+        </div >
     );
 }
