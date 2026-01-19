@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { BookOpen, Palette, FileText } from 'lucide-react';
 import MediaShell from '../../components/layout/MediaShell';
-import LearnSection from './LearnSection';
-import SandboxSection from './SandboxSection';
-import QuizSection from './QuizSection';
+import LearnSection from './LearnSection.tsx';
+import SandboxSection from './SandboxSection.tsx';
+import QuizSection from './QuizSection.tsx';
 
 type Tab = 'learn' | 'sandbox' | 'quiz';
 
@@ -21,8 +21,8 @@ export default function Statistics() {
                     <button
                         onClick={() => setActiveTab('learn')}
                         className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold transition-all ${activeTab === 'learn'
-                                ? 'bg-brand-blue text-white shadow-md'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'bg-brand-blue text-white shadow-md'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <BookOpen size={20} />
@@ -31,8 +31,8 @@ export default function Statistics() {
                     <button
                         onClick={() => setActiveTab('sandbox')}
                         className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold transition-all ${activeTab === 'sandbox'
-                                ? 'bg-brand-orange text-white shadow-md'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'bg-brand-orange text-white shadow-md'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <Palette size={20} />
@@ -41,8 +41,8 @@ export default function Statistics() {
                     <button
                         onClick={() => setActiveTab('quiz')}
                         className={`flex-1 flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-bold transition-all ${activeTab === 'quiz'
-                                ? 'bg-brand-red text-white shadow-md'
-                                : 'text-gray-600 hover:bg-gray-50'
+                            ? 'bg-brand-red text-white shadow-md'
+                            : 'text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         <FileText size={20} />
@@ -51,7 +51,7 @@ export default function Statistics() {
                 </div>
 
                 {/* Tab Content */}
-                <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 max-h-[calc(100vh-200px)] overflow-y-auto">
                     {activeTab === 'learn' && <LearnSection />}
                     {activeTab === 'sandbox' && <SandboxSection />}
                     {activeTab === 'quiz' && <QuizSection />}
