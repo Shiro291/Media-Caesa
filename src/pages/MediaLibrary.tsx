@@ -32,6 +32,16 @@ const mediaList = [
         img: '/assets/firefighter/character.png',
         link: '/quiz',
         color: 'orange'
+    },
+    {
+        id: 'simple-quiz',
+        title: 'Kuis Warna & Bentuk',
+        type: 'Kuis',
+        age: 'TK B',
+        desc: 'Belajar mengenal warna dan bentuk dengan 10 soal seru!',
+        img: '/assets/firefighter/character.png',
+        link: '/simple-quiz',
+        color: 'purple'
     }
 ];
 
