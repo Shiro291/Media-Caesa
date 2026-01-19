@@ -42,6 +42,16 @@ const mediaList = [
         img: '/assets/firefighter/character.png',
         link: '/simple-quiz',
         color: 'purple'
+    },
+    {
+        id: 'statistics',
+        title: 'Belajar Statistik',
+        type: 'Pembelajaran',
+        age: 'Kelas 4 SD',
+        desc: 'Pelajari populasi, sampel, piktogram, dan diagram batang dengan cara yang menyenangkan!',
+        img: '/assets/firefighter/character.png',
+        link: '/statistics',
+        color: 'indigo'
     }
 ];
 
