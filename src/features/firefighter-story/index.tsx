@@ -17,6 +17,7 @@ const slides = [
                 <img
                     src="/assets/firefighter/character.png"
                     alt="Budi Pemadam"
+                    loading="lazy"
                     className="h-64 md:h-96 mx-auto drop-shadow-2xl cursor-pointer hover:scale-105 transition-transform"
                     onClick={() => playSound('success')}
                 />

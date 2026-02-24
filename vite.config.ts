@@ -38,4 +38,16 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'framer-motion': ['framer-motion'],
+          'lucide-react': ['lucide-react']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000,
+  }
 })

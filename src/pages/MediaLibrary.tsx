@@ -52,6 +52,16 @@ const mediaList = [
         img: '/assets/firefighter/character.png',
         link: '/statistics',
         color: 'indigo'
+    },
+    {
+        id: 'literacy-quiz',
+        title: 'Kuis Literasi',
+        type: 'Kuis',
+        age: 'TK B',
+        desc: 'Belajar membaca dan mengeja dengan tebak gambar yang menyenangkan!',
+        img: '/assets/firefighter/character.png',
+        link: '/literacy-quiz',
+        color: 'emerald'
     }
 ];
 
@@ -103,6 +113,7 @@ export default function MediaLibrary() {
                             <img
                                 src={media.img}
                                 alt={media.title}
+                                loading="lazy"
                                 className="h-full object-contain transform group-hover:scale-110 transition duration-500"
                             />
                             <span className={`absolute top-4 right-4 bg-${media.color}-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm`}>
