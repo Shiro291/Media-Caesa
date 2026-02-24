@@ -3,9 +3,11 @@ export interface QuizQuestion {
     img?: string;
     emoji?: string;
     opts: string[];
-    ans: number;
+    ans: number; // Keep for multiple-choice backward compatibility
     isShapeSelection?: boolean;
     storyContext?: string; // Optional context text to show persistently
+    type?: 'multiple-choice' | 'subjective'; // Defaults to multiple-choice
+    subjectiveAns?: string | string[]; // Answer(s) for subjective validation
 }
 
 export const firefighterQuestions: QuizQuestion[] = [
@@ -248,22 +250,25 @@ export const literacyQuizQuestions: QuizQuestion[] = [
     {
         storyContext: "Pernahkah kamu main lompat tali?\nDengan siapa saja waktu itu kamu bermain?\nDi mana kamu bermain?",
         q: "Pertanyaan: Pernahkah kamu main lompat tali?",
-        opts: ["Pernah", "Tidak pernah", "Mungkin", "Tidak tahu"],
-        ans: 0, // Assuming "Pernah" as a positive valid answer for kids
+        type: 'subjective',
+        opts: [],
+        ans: -1,
         emoji: "🤔"
     },
     {
         storyContext: "Pernahkah kamu main lompat tali?\nDengan siapa saja waktu itu kamu bermain?\nDi mana kamu bermain?",
         q: "Dengan siapa saja waktu itu kamu bermain?",
-        opts: ["Sendiri", "Teman-teman", "Tidak main", "Tidur"],
-        ans: 1,
+        type: 'subjective',
+        opts: [],
+        ans: -1,
         emoji: "👥"
     },
     {
         storyContext: "Pernahkah kamu main lompat tali?\nDengan siapa saja waktu itu kamu bermain?\nDi mana kamu bermain?",
         q: "Di mana kamu bermain?",
-        opts: ["Di kamar", "Di sekolah/halaman", "Di atas atap", "Di pasar"],
-        ans: 1,
+        type: 'subjective',
+        opts: [],
+        ans: -1,
         emoji: "🏫"
     },
 

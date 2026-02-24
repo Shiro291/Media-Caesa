@@ -25,6 +25,8 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
     const [qIndex, setQIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
+    const [subjectiveInput, setSubjectiveInput] = useState("");
+    const [userAnswers, setUserAnswers] = useState<Record<number, string | number>>({});
     const [isFinished, setIsFinished] = useState(false);
     const { playSound } = useSound();
 
@@ -33,6 +35,7 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
     const handleAnswer = (optIndex: number) => {
         if (selectedOpt !== null) return; // Prevent double click
         setSelectedOpt(optIndex);
+        setUserAnswers(prev => ({ ...prev, [qIndex]: optIndex }));
 
         if (optIndex === currentQ.ans) {
             playSound('success');
@@ -41,30 +44,63 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
             playSound('click'); // Error sound
         }
 
-        // Auto advance
+        autoAdvance();
+    };
+
+    const handleSubmitSubjective = () => {
+        if (!subjectiveInput.trim()) return;
+
+        setUserAnswers(prev => ({ ...prev, [qIndex]: subjectiveInput }));
+        playSound('success');
+        autoAdvance();
+    };
+
+    const autoAdvance = () => {
         setTimeout(() => {
             if (qIndex < questions.length - 1) {
                 setQIndex(i => i + 1);
                 setSelectedOpt(null);
+                setSubjectiveInput("");
             } else {
                 setIsFinished(true);
                 playSound('success');
             }
-        }, 1500);
+        }, 1200);
     };
 
     if (isFinished) {
         return (
             <MediaShell bgClass={resultConfig.bgClass}>
-                <div className="bg-white p-10 rounded-3xl shadow-2xl text-center max-w-lg w-full space-y-8 animate-bounce">
-                    <h1 className={`text-4xl font-bold ${resultConfig.textClass}`}>{resultConfig.title}</h1>
-                    <div className={`text-6xl ${resultConfig.textClass} font-black`}>
-                        {score} / {questions.length}
+                <div className="bg-white p-6 md:p-10 rounded-3xl shadow-2xl w-full max-w-2xl space-y-8 animate-bounce" style={{ animationIterationCount: 1 }}>
+                    <div className="text-center">
+                        <h1 className={`text-4xl font-bold ${resultConfig.textClass} mb-2`}>{resultConfig.title}</h1>
+                        <div className={`text-6xl ${resultConfig.textClass} font-black mb-2`}>
+                            {score} / {questions.filter(q => q.type !== 'subjective').length}
+                        </div>
+                        <p className="text-xl text-gray-500">
+                            {score === questions.length ? resultConfig.perfectMessage : resultConfig.goodMessage}
+                        </p>
                     </div>
-                    <p className="text-xl text-gray-500">
-                        {score === questions.length ? resultConfig.perfectMessage : resultConfig.goodMessage}
-                    </p>
-                    <div className="flex flex-col gap-4">
+
+                    <div className="mt-8 text-left space-y-4 max-h-[40vh] overflow-y-auto px-2">
+                        <h3 className="text-xl font-bold text-gray-800 sticky top-0 bg-white pt-2 pb-4">Jawaban Kamu:</h3>
+                        {questions.map((q, idx) => (
+                            <div key={idx} className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                <p className="font-semibold text-gray-800 whitespace-pre-line">{idx + 1}. {q.q}</p>
+                                <p className="mt-2 text-brand-blue font-medium">
+                                    Jawab: {
+                                        q.type === 'subjective'
+                                            ? (userAnswers[idx] || <span className="text-gray-400 italic">Tidak dijawab</span>)
+                                            : typeof userAnswers[idx] === 'number'
+                                                ? q.opts[userAnswers[idx] as number]
+                                                : <span className="text-gray-400 italic">Tidak dijawab</span>
+                                    }
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="flex flex-col gap-4 mt-8">
                         <GameControls
                             isFinished={true}
                             onRestart={() => window.location.reload()}
@@ -72,7 +108,7 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
                     </div>
                     <Link
                         to="/library"
-                        className="block mt-8 text-gray-500 underline"
+                        className="block mt-4 text-center text-gray-500 hover:text-gray-700 underline"
                     >
                         Kembali ke Pustaka
                     </Link>
@@ -130,21 +166,39 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
                                 )}
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                {currentQ.opts.map((opt, idx) => (
+                            {currentQ.type === 'subjective' ? (
+                                <div className="space-y-4">
+                                    <textarea
+                                        value={subjectiveInput}
+                                        onChange={(e) => setSubjectiveInput(e.target.value)}
+                                        placeholder="Ketik jawabanmu di sini..."
+                                        className="w-full p-4 md:p-6 rounded-xl text-xl md:text-2xl border-2 border-gray-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 transition-all min-h-[120px] resize-y"
+                                    />
                                     <button
-                                        key={idx}
-                                        onClick={() => handleAnswer(idx)}
-                                        disabled={selectedOpt !== null}
-                                        className={`
-                                            p-4 md:p-6 rounded-xl text-2xl md:text-3xl font-bold transition-all duration-200
-                                            ${getOptionStyle(idx)}
-                                        `}
+                                        onClick={handleSubmitSubjective}
+                                        disabled={!subjectiveInput.trim()}
+                                        className="w-full p-4 md:p-6 rounded-xl text-xl md:text-2xl font-bold bg-green-500 text-white hover:bg-green-600 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        {opt}
+                                        Lanjut
                                     </button>
-                                ))}
-                            </div>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-2 gap-4">
+                                    {currentQ.opts.map((opt, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => handleAnswer(idx)}
+                                            disabled={selectedOpt !== null}
+                                            className={`
+                                                p-4 md:p-6 rounded-xl text-2xl md:text-3xl font-bold transition-all duration-200
+                                                ${getOptionStyle(idx)}
+                                            `}
+                                        >
+                                            {opt}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 </AnimatePresence>
