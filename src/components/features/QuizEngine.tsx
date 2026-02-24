@@ -172,7 +172,7 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
                                         value={subjectiveInput}
                                         onChange={(e) => setSubjectiveInput(e.target.value)}
                                         placeholder="Ketik jawabanmu di sini..."
-                                        className="w-full p-4 md:p-6 rounded-xl text-xl md:text-2xl border-2 border-gray-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 transition-all min-h-[120px] resize-y"
+                                        className="w-full p-4 md:p-6 rounded-xl text-xl md:text-2xl border-2 border-gray-200 focus:border-brand-blue focus:ring-4 focus:ring-brand-blue/20 transition-all min-h-[120px] resize-y text-gray-800 bg-white"
                                     />
                                     <button
                                         onClick={handleSubmitSubjective}
