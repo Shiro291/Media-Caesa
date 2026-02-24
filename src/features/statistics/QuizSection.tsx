@@ -2,151 +2,297 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSound } from '../../hooks/useSound';
 import { CheckCircle, XCircle } from 'lucide-react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const questions = [
-    // Population vs Sample (3 questions)
+    // 1. Pictogram (Mangoes)
     {
-        q: "Semua siswa di SD Harapan Bangsa adalah contoh dari...",
-        opts: ["Sampel", "Populasi", "Diagram", "Data"],
-        ans: 1,
-        explanation: "Benar! Semua siswa = Populasi (keseluruhan)"
-    },
-    {
-        q: "Siswa kelas 4A yang dipilih untuk survei adalah contoh dari...",
-        opts: ["Populasi", "Sampel", "Piktogram", "Statistik"],
-        ans: 1,
-        explanation: "Tepat! Sebagian siswa yang dipilih = Sampel"
-    },
-    {
-        q: "Manakah yang merupakan POPULASI?",
-        opts: ["5 pohon yang diukur", "Semua ikan di kolam", "10 siswa yang ditanya", "Kelas 4B saja"],
-        ans: 1,
-        explanation: "Benar! 'Semua ikan' berarti populasi (keseluruhan)"
+        q: "Perhatikan data berikut!\nJika satu gambar mangga mewakili 3 buah mangga, berapa banyak mangga yang dimiliki Rio?",
+        visual: (
+            <div className="bg-white p-4 rounded-lg border-2 border-gray-200">
+                <div className="flex items-center gap-4 border-b py-2">
+                    <span className="w-20 font-bold text-gray-800">Rio</span>
+                    <div className="flex gap-1 text-2xl">
+                        <span>🥭</span><span>🥭</span><span>🥭</span><span>🥭</span>
+                    </div>
+                </div>
+                <div className="mt-4 text-sm text-gray-600 bg-yellow-50 p-2 rounded inline-block">
+                    ℹ️ 🥭 = 3 buah mangga
+                </div>
+            </div>
+        ),
+        opts: ["4", "7", "12", "15"],
+        ans: 2, // 4 * 3 = 12
+        explanation: "Benar! Ada 4 gambar mangga. 4 x 3 = 12 buah mangga."
     },
 
-    // Reading Pictogram (3 questions)
+    // 2. Bar Chart (Professions) - Based on textbook image
     {
-        q: "Berapa siswa yang suka apel?\n\n🍎🍎🍎🍎🍎",
-        opts: ["3", "4", "5", "6"],
-        ans: 2,
-        explanation: "Benar! Ada 5 gambar apel = 5 siswa"
-    },
-    {
-        q: "Olahraga mana yang paling banyak disukai?\n\n⚽⚽⚽⚽⚽⚽\n🏀🏀🏀\n🏐🏐🏐🏐",
-        opts: ["Sepak Bola", "Basket", "Voli", "Sama semua"],
-        ans: 0,
-        explanation: "Tepat! Sepak bola memiliki 6 gambar (paling banyak)"
-    },
-    {
-        q: "Berapa total siswa yang suka buah?\n\n🍎🍎🍎\n🍌🍌🍌🍌\n🍊🍊",
-        opts: ["7", "8", "9", "10"],
-        ans: 2,
-        explanation: "Benar! 3 + 4 + 2 = 9 siswa"
+        q: "Perhatikan diagram batang Profesi Orang Tua Siswa berikut.\nBerapa banyak orang tua yang berprofesi sebagai PNS?",
+        visual: (() => {
+            const data = [
+                { name: 'PNS', value: 8 },
+                { name: 'TNI', value: 5 },
+                { name: 'Petani', value: 12 },
+                { name: 'Guru', value: 6 },
+                { name: 'Wiraswasta', value: 4 }
+            ];
+            return (
+                <div className="bg-white p-4 rounded-lg h-64">
+                    <p className="text-center text-sm font-bold text-gray-700 mb-2">Data Profesi Orang Tua Siswa</p>
+                    <ResponsiveContainer width="100%" height="85%">
+                        <BarChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                            <YAxis domain={[0, 14]} />
+                            <Tooltip />
+                            <Bar dataKey="value" fill="#9333EA" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            );
+        })(),
+        opts: ["5", "8", "10", "12"],
+        ans: 1, // 8
+        explanation: "Tepat! Batang untuk PNS menunjukkan angka 8."
     },
 
-    // Reading Bar Chart (4 questions)
+    // 3. Bar Chart Logic (Most Frequent)
     {
-        q: "Lihat diagram batang ini. Berapa siswa hadir hari Senin?",
-        visual: (
-            <div className="flex items-end justify-around h-48 bg-gray-50 p-4 rounded-lg">
-                <div className="flex flex-col items-center gap-2">
-                    <div className="bg-red-500 w-16 rounded-t-lg" style={{ height: '60%' }}></div>
-                    <span className="text-sm font-semibold">Senin</span>
+        q: "Berdasarkan diagram sebelumnya, profesi apa yang PALING BANYAK dilakukan orang tua siswa?",
+        visual: (() => {
+            const data = [
+                { name: 'PNS', value: 8 },
+                { name: 'TNI', value: 5 },
+                { name: 'Petani', value: 12 },
+                { name: 'Guru', value: 6 },
+                { name: 'Wiraswasta', value: 4 }
+            ];
+            return (
+                <div className="bg-white p-4 rounded-lg h-48">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                            <YAxis domain={[0, 14]} />
+                            <Tooltip />
+                            <Bar dataKey="value" fill="#9333EA" />
+                        </BarChart>
+                    </ResponsiveContainer>
                 </div>
-                <div className="flex flex-col items-center gap-2">
-                    <div className="bg-blue-500 w-16 rounded-t-lg" style={{ height: '80%' }}></div>
-                    <span className="text-sm font-semibold">Selasa</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                    <div className="bg-green-500 w-16 rounded-t-lg" style={{ height: '40%' }}></div>
-                    <span className="text-sm font-semibold">Rabu</span>
-                </div>
-            </div>
-        ),
-        opts: ["4", "6", "8", "10"],
-        ans: 1,
-        explanation: "Benar! Batang Senin setinggi angka 6"
+            );
+        })(),
+        opts: ["PNS", "Petani", "TNI", "Guru"],
+        ans: 1, // Petani
+        explanation: "Benar! Batang 'Petani' adalah yang paling tinggi."
     },
+
+    // 4. Data Table (Min Value)
     {
-        q: "Hari apa yang paling banyak siswa hadir?",
+        q: "Perhatikan tabel 'Warna Kesukaan' berikut.\nWarna apa yang paling sedikit disukai siswa?",
         visual: (
-            <div className="flex items-end justify-around h-48 bg-gray-50 p-4 rounded-lg">
-                <div className="flex flex-col items-center gap-2">
-                    <div className="bg-red-500 w-16 rounded-t-lg" style={{ height: '50%' }}></div>
-                    <span className="text-sm font-semibold">Senin</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                    <div className="bg-blue-500 w-16 rounded-t-lg" style={{ height: '100%' }}></div>
-                    <span className="text-sm font-semibold">Selasa</span>
-                </div>
-                <div className="flex flex-col items-center gap-2">
-                    <div className="bg-green-500 w-16 rounded-t-lg" style={{ height: '70%' }}></div>
-                    <span className="text-sm font-semibold">Rabu</span>
-                </div>
+            <div className="overflow-hidden rounded-lg border border-gray-200">
+                <table className="w-full text-sm text-left">
+                    <thead className="bg-gray-100 uppercase text-xs font-bold text-gray-700">
+                        <tr>
+                            <th className="px-4 py-3">Warna</th>
+                            <th className="px-4 py-3 text-center">Jumlah Siswa</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200">
+                        <tr><td className="px-4 py-2 text-gray-800">Merah</td><td className="px-4 py-2 text-center text-gray-800">10</td></tr>
+                        <tr><td className="px-4 py-2 text-gray-800">Kuning</td><td className="px-4 py-2 text-center text-gray-800">7</td></tr>
+                        <tr className="bg-green-50"><td className="px-4 py-2 text-gray-800">Hijau</td><td className="px-4 py-2 text-center font-bold text-gray-800">15</td></tr>
+                        <tr><td className="px-4 py-2 text-gray-800">Hitam</td><td className="px-4 py-2 text-center font-bold text-red-600">4</td></tr>
+                    </tbody>
+                </table>
             </div>
         ),
-        opts: ["Senin", "Selasa", "Rabu", "Sama semua"],
-        ans: 1,
-        explanation: "Tepat! Batang Selasa paling tinggi"
+        opts: ["Kuning", "Hitam", "Merah", "Hijau"],
+        ans: 1, // Hitam (4)
+        explanation: "Benar! Hitam hanya disukai 4 siswa, paling sedikit dibanding warna lain."
     },
+
+    // 5. Pictogram Calculation
     {
-        q: "Berapa selisih siswa hadir antara hari Kamis dan Jumat?",
+        q: "Rahma memiliki koleksi buku seperti pada gambar.\nJika satu buku mewakili 5 buku, berapa total buku Rahma?",
         visual: (
-            <div className="flex items-end justify-around h-48 bg-gray-50 p-4 rounded-lg relative">
-                <div className="absolute left-2 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-4">
-                    <span>10</span>
-                    <span>5</span>
-                    <span>0</span>
+            <div className="bg-blue-50 p-6 rounded-xl border-dashed border-2 border-blue-200">
+                <div className="flex flex-wrap gap-2 justify-center mb-4">
+                    {/* 7 books */}
+                    {[...Array(7)].map((_, i) => (
+                        <span key={i} className="text-3xl filter drop-shadow-sm">📘</span>
+                    ))}
                 </div>
-                <div className="flex items-end justify-around w-full pl-8">
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="bg-purple-500 w-16 rounded-t-lg" style={{ height: '80%' }}></div>
-                        <span className="text-sm font-semibold">Kamis</span>
-                        <span className="text-xs">8</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="bg-orange-500 w-16 rounded-t-lg" style={{ height: '50%' }}></div>
-                        <span className="text-sm font-semibold">Jumat</span>
-                        <span className="text-xs">5</span>
-                    </div>
+                <div className="text-center bg-white py-1 px-3 rounded-full text-xs font-bold text-blue-600 inline-block">
+                    Keterangan: 📘 = 5 buku
                 </div>
             </div>
         ),
-        opts: ["2", "3", "4", "5"],
-        ans: 1,
-        explanation: "Benar! 8 - 5 = 3 siswa"
+        opts: ["7", "12", "30", "35"],
+        ans: 3, // 7 * 5 = 35
+        explanation: "Tepat! 7 gambar buku x 5 = 35 buku."
     },
+
+    // 6. Bar Chart (Lomba) - Based on textbook image 2
     {
-        q: "Berapa total siswa yang hadir dalam 3 hari ini?",
-        visual: (
-            <div className="flex items-end justify-around h-48 bg-gray-50 p-4 rounded-lg relative">
-                <div className="absolute left-2 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-4">
-                    <span>10</span>
-                    <span>5</span>
-                    <span>0</span>
+        q: "Berapa selisih siswa yang mengikuti lomba Matematika dan Bahasa Inggris?",
+        visual: (() => {
+            const data = [
+                { name: 'Matematika', value: 15 },
+                { name: 'IPA', value: 8 },
+                { name: 'B. Inggris', value: 12 },
+                { name: 'Puisi', value: 5 },
+                { name: 'P. Umum', value: 10 }
+            ];
+            const colors = ['#3B82F6', '#9CA3AF', '#818CF8', '#FCD34D', '#60A5FA'];
+            return (
+                <div className="bg-white p-4 rounded-lg h-64">
+                    <p className="text-center text-sm font-bold text-gray-700 mb-2">Data Siswa yang Mengikuti Lomba</p>
+                    <ResponsiveContainer width="100%" height="85%">
+                        <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={{ fontSize: 9 }} />
+                            <YAxis domain={[0, 16]} />
+                            <Tooltip />
+                            <Bar dataKey="value">
+                                {data.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                                ))}
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
                 </div>
-                <div className="flex items-end justify-around w-full pl-8">
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="bg-red-500 w-16 rounded-t-lg" style={{ height: '40%' }}></div>
-                        <span className="text-sm font-semibold">Senin</span>
-                        <span className="text-xs">4</span>
+            );
+        })(),
+        opts: ["2 siswa", "3 siswa", "5 siswa", "8 siswa"],
+        ans: 1, // 15 - 12 = 3
+        explanation: "Benar! Matematika (15) - Bahasa Inggris (12) = 3 siswa."
+    },
+
+    // 7. Bar Chart (Harvest) - Reading Value
+    {
+        q: "Berapa kuintal hasil panen Singkong Desa Jaya Makmur?",
+        visual: (() => {
+            const data = [
+                { name: 'Jagung', value: 25 },
+                { name: 'Cabai', value: 15 },
+                { name: 'Singkong', value: 20 },
+                { name: 'Bawang', value: 10 }
+            ];
+            // Using different colors but not highlighting the specific answer row specially
+            const colors = ['#FDBA74', '#F87171', '#D97706', '#D8B4FE'];
+            return (
+                <div className="bg-white p-4 rounded-lg h-64">
+                    <p className="text-center text-sm font-bold text-gray-700 mb-2">Hasil Panen Desa Jaya Makmur</p>
+                    <ResponsiveContainer width="100%" height="85%">
+                        <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                            <YAxis domain={[0, 30]} />
+                            <Tooltip />
+                            <Bar dataKey="value">
+                                {data.map((_, index) => (
+                                    <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                                ))}
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            );
+        })(),
+        opts: ["15 kuintal", "20 kuintal", "25 kuintal", "30 kuintal"],
+        ans: 1, // 20
+        explanation: "Tepat! Batang untuk Singkong menunjukkan angka 20."
+    },
+
+    // 8. Bar Chart (Visitors) - Max Value
+    {
+        q: "Berdasarkan diagram, pada hari apa jumlah pengunjung objek wisata PALING BANYAK?",
+        visual: (() => {
+            const data = [
+                { name: 'Ming', value: 95 },
+                { name: 'Sen', value: 60 },
+                { name: 'Sel', value: 50 },
+                { name: 'Rab', value: 80 },
+                { name: 'Kam', value: 70 },
+                { name: 'Jum', value: 35 },
+                { name: 'Sab', value: 100 }
+            ];
+            return (
+                <div className="bg-white p-4 rounded-lg h-64">
+                    <p className="text-center text-sm font-bold text-gray-700 mb-2">Jumlah Pengunjung Objek Wisata</p>
+                    <ResponsiveContainer width="100%" height="85%">
+                        <BarChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                            <YAxis domain={[0, 100]} />
+                            <Tooltip />
+                            <Bar dataKey="value" fill="#3B82F6" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            );
+        })(),
+        opts: ["Ahad/Minggu", "Rabu", "Jumat", "Sabtu"],
+        ans: 3, // Sabtu
+        explanation: "Benar! Batang hari Sabtu paling tinggi (1000 pengunjung)."
+    },
+
+    // 9. Data Table (Weight)
+    {
+        q: "Perhatikan tabel 'Berat Badan Siswa Kls IV' berikut.\nBerapa banyak siswa yang memiliki berat badan 39 kg?",
+        visual: (
+            <div className="overflow-hidden rounded-lg border border-gray-200">
+                <table className="w-full text-sm text-center">
+                    <thead className="bg-purple-100 text-purple-900 font-bold">
+                        <tr>
+                            <th className="px-4 py-2 border-r border-purple-200">Berat (kg)</th>
+                            <th className="px-4 py-2">Banyak Siswa</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100 bg-white">
+                        <tr><td className="py-2 border-r text-gray-800">35</td><td className="text-gray-800">15</td></tr>
+                        <tr><td className="py-2 border-r text-gray-800">37</td><td className="text-gray-800">10</td></tr>
+                        <tr><td className="py-2 border-r text-gray-800">38</td><td className="text-gray-800">4</td></tr>
+                        <tr><td className="py-2 border-r text-gray-800">39</td><td className="text-gray-800">13</td></tr>
+                        <tr><td className="py-2 border-r text-gray-800">40</td><td className="text-gray-800">8</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        ),
+        opts: ["4 siswa", "8 siswa", "13 siswa", "15 siswa"],
+        ans: 2, // 13
+        explanation: "Benar! Lihat baris 39 kg, jumlah siswanya adalah 13."
+    },
+
+    // 10. Pictogram (Flowers) - Scale 10
+    {
+        q: "Diagram berikut menunjukkan data bunga di taman.\nJika satu gambar bunga mewakili 10 tangkai, berapa jumlah bunga Mawar?",
+        visual: (
+            <div className="bg-green-50 p-4 rounded-lg border-2 border-green-200">
+                <div className="space-y-3">
+                    <div className="flex items-center">
+                        <span className="w-20 text-xs font-bold text-gray-800">Anggrek</span>
+                        <div className="flex text-xl">🌸🌸🌸</div>
                     </div>
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="bg-blue-500 w-16 rounded-t-lg" style={{ height: '60%' }}></div>
-                        <span className="text-sm font-semibold">Selasa</span>
-                        <span className="text-xs">6</span>
+                    <div className="flex items-center">
+                        <span className="w-20 text-xs font-bold text-gray-800">Mawar</span>
+                        <div className="flex text-xl">🌹🌹🌹🌹</div>
                     </div>
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="bg-green-500 w-16 rounded-t-lg" style={{ height: '50%' }}></div>
-                        <span className="text-sm font-semibold">Rabu</span>
-                        <span className="text-xs">5</span>
+                    <div className="flex items-center">
+                        <span className="w-20 text-xs font-bold text-gray-800">Melati</span>
+                        <div className="flex text-xl">🌼🌼🌼</div>
                     </div>
+                </div>
+                <div className="mt-3 text-[10px] text-center font-bold text-green-800 bg-green-200 rounded py-1">
+                    Keterangan: 1 Gambar = 10 Tangkai
                 </div>
             </div>
         ),
-        opts: ["13", "14", "15", "16"],
-        ans: 2,
-        explanation: "Tepat! 4 + 6 + 5 = 15 siswa"
+        opts: ["4 tangkai", "14 tangkai", "40 tangkai", "44 tangkai"],
+        ans: 2, // 4 * 10 = 40
+        explanation: "Tepat! Ada 4 gambar mawar. 4 x 10 = 40 tangkai."
     }
 ];
 
@@ -165,14 +311,14 @@ export default function QuizSection() {
 
         if (optIndex === currentQ.ans) {
             playSound('success');
-            setScore(s => s + 1);
+            setScore((s: number) => s + 1);
         } else {
             playSound('click');
         }
 
         setTimeout(() => {
             if (qIndex < questions.length - 1) {
-                setQIndex(i => i + 1);
+                setQIndex((i: number) => i + 1);
                 setSelectedOpt(null);
             } else {
                 setIsFinished(true);

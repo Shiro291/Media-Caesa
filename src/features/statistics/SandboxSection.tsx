@@ -159,8 +159,8 @@ export default function SandboxSection() {
                         key={diagram.id}
                         onClick={() => setDiagramType(diagram.id as DiagramType)}
                         className={`px-3 py-3 rounded-xl font-bold transition-all text-sm ${diagramType === diagram.id
-                                ? `${diagram.color} text-white shadow-lg scale-105`
-                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            ? `${diagram.color} text-white shadow-lg scale-105`
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                             }`}
                     >
                         <div>{diagram.name}</div>
@@ -187,7 +187,7 @@ export default function SandboxSection() {
                             return (
                                 <div key={key} className="bg-white p-4 rounded-lg">
                                     <div className="flex items-center justify-between mb-4">
-                                        <span className="text-xl font-bold">{emojis[key as keyof typeof emojis]} {labels[key as keyof typeof labels]}</span>
+                                        <span className="text-xl font-bold text-orange-600">{emojis[key as keyof typeof emojis]} {labels[key as keyof typeof labels]}</span>
                                         <div className="flex items-center gap-3">
                                             <button onClick={() => updatePictogram(key as keyof typeof pictogramData, -1)} className="p-2 bg-red-100 hover:bg-red-200 rounded-lg transition" disabled={value === 0}>
                                                 <Minus size={20} className="text-red-600" />
@@ -247,7 +247,7 @@ export default function SandboxSection() {
                                                     type="text"
                                                     value={editValue}
                                                     onChange={(e) => setEditValue(e.target.value)}
-                                                    className="px-3 py-1 border-2 border-blue-500 rounded-lg"
+                                                    className="px-3 py-1 border-2 border-blue-500 rounded-lg text-gray-900"
                                                     autoFocus
                                                 />
                                                 <button onClick={() => saveEdit(barData, setBarData)} className="p-1 bg-green-500 text-white rounded">
@@ -259,9 +259,9 @@ export default function SandboxSection() {
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-bold">{item.name}</span>
+                                                <span className="text-lg font-bold text-blue-600">{item.name}</span>
                                                 <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded">
-                                                    <Edit2 size={14} className="text-gray-500" />
+                                                    <Edit2 size={14} className="text-gray-700" />
                                                 </button>
                                             </div>
                                         )}
@@ -273,7 +273,7 @@ export default function SandboxSection() {
                                                     type="number"
                                                     value={editValue}
                                                     onChange={(e) => setEditValue(e.target.value)}
-                                                    className="w-20 px-3 py-1 border-2 border-blue-500 rounded-lg"
+                                                    className="w-20 px-3 py-1 border-2 border-blue-500 rounded-lg text-gray-900"
                                                     autoFocus
                                                 />
                                                 <button onClick={() => saveEdit(barData, setBarData)} className="p-1 bg-green-500 text-white rounded">
@@ -287,7 +287,7 @@ export default function SandboxSection() {
                                             <>
                                                 <span className="text-2xl font-bold text-blue-600 w-12 text-center">{item.value}</span>
                                                 <button onClick={() => startEdit(idx, 'value', item.value)} className="p-1 hover:bg-gray-100 rounded">
-                                                    <Edit2 size={14} className="text-gray-500" />
+                                                    <Edit2 size={14} className="text-gray-700" />
                                                 </button>
                                             </>
                                         )}
@@ -341,28 +341,28 @@ export default function SandboxSection() {
                                     <div className="flex items-center gap-3 flex-1">
                                         {editingIndex === idx && editingField === 'name' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-green-500 rounded-lg" autoFocus />
+                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-green-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(lineData, setLineData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-bold">{item.name}</span>
-                                                <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <span className="text-lg font-bold text-green-600">{item.name}</span>
+                                                <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </div>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-3">
                                         {editingIndex === idx && editingField === 'value' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-20 px-3 py-1 border-2 border-green-500 rounded-lg" autoFocus />
+                                                <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-20 px-3 py-1 border-2 border-green-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(lineData, setLineData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <>
                                                 <span className="text-2xl font-bold text-green-600 w-16 text-center">{item.value}</span>
-                                                <button onClick={() => startEdit(idx, 'value', item.value)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <button onClick={() => startEdit(idx, 'value', item.value)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </>
                                         )}
                                         {lineData.length > 1 && (
@@ -417,28 +417,28 @@ export default function SandboxSection() {
                                         <div className="w-6 h-6 rounded" style={{ backgroundColor: COLORS[idx % COLORS.length] }}></div>
                                         {editingIndex === idx && editingField === 'name' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-purple-500 rounded-lg" autoFocus />
+                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-purple-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(pieData, setPieData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-bold">{item.name}</span>
-                                                <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <span className="text-lg font-bold text-purple-600">{item.name}</span>
+                                                <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </div>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-3">
                                         {editingIndex === idx && editingField === 'value' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-20 px-3 py-1 border-2 border-purple-500 rounded-lg" autoFocus />
+                                                <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-20 px-3 py-1 border-2 border-purple-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(pieData, setPieData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <>
                                                 <span className="text-2xl font-bold text-purple-600 w-12 text-center">{item.value}</span>
-                                                <button onClick={() => startEdit(idx, 'value', item.value)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <button onClick={() => startEdit(idx, 'value', item.value)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </>
                                         )}
                                         {pieData.length > 1 && (
@@ -491,28 +491,28 @@ export default function SandboxSection() {
                                     <div className="flex items-center gap-3 flex-1">
                                         {editingIndex === idx && editingField === 'month' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-cyan-500 rounded-lg" autoFocus />
+                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-cyan-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(areaData, setAreaData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-bold">{item.month}</span>
-                                                <button onClick={() => startEdit(idx, 'month', item.month)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <span className="text-lg font-bold text-cyan-600">{item.month}</span>
+                                                <button onClick={() => startEdit(idx, 'month', item.month)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </div>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-3">
                                         {editingIndex === idx && editingField === 'sales' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-24 px-3 py-1 border-2 border-cyan-500 rounded-lg" autoFocus />
+                                                <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-24 px-3 py-1 border-2 border-cyan-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(areaData, setAreaData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <>
                                                 <span className="text-2xl font-bold text-cyan-600 w-20 text-center">{item.sales}</span>
-                                                <button onClick={() => startEdit(idx, 'sales', item.sales)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <button onClick={() => startEdit(idx, 'sales', item.sales)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </>
                                         )}
                                         {areaData.length > 1 && (
@@ -573,47 +573,47 @@ export default function SandboxSection() {
                                     </div>
                                     <div className="grid grid-cols-3 gap-3 mt-3">
                                         <div>
-                                            <label className="text-sm text-gray-600">X:</label>
+                                            <label className="text-sm text-gray-800 font-medium">X:</label>
                                             {editingIndex === idx && editingField === 'x' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-pink-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-pink-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(scatterData, setScatterData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-pink-600">{item.x}</span>
-                                                    <button onClick={() => startEdit(idx, 'x', item.x)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'x', item.x)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <label className="text-sm text-gray-600">Y:</label>
+                                            <label className="text-sm text-gray-800 font-medium">Y:</label>
                                             {editingIndex === idx && editingField === 'y' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-pink-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-pink-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(scatterData, setScatterData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-pink-600">{item.y}</span>
-                                                    <button onClick={() => startEdit(idx, 'y', item.y)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'y', item.y)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <label className="text-sm text-gray-600">Z (Size):</label>
+                                            <label className="text-sm text-gray-800 font-medium">Z (Size):</label>
                                             {editingIndex === idx && editingField === 'z' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-pink-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-pink-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(scatterData, setScatterData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-pink-600">{item.z}</span>
-                                                    <button onClick={() => startEdit(idx, 'z', item.z)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'z', item.z)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
@@ -663,14 +663,14 @@ export default function SandboxSection() {
                                     <div className="flex items-center justify-between mb-3">
                                         {editingIndex === idx && editingField === 'subject' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-indigo-500 rounded-lg" autoFocus />
+                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-indigo-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(radarData, setRadarData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-bold">{item.subject}</span>
-                                                <button onClick={() => startEdit(idx, 'subject', item.subject)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <span className="text-lg font-bold text-indigo-600">{item.subject}</span>
+                                                <button onClick={() => startEdit(idx, 'subject', item.subject)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </div>
                                         )}
                                         {radarData.length > 1 && (
@@ -681,32 +681,32 @@ export default function SandboxSection() {
                                     </div>
                                     <div className="grid grid-cols-2 gap-3">
                                         <div>
-                                            <label className="text-sm text-gray-600">Student A:</label>
+                                            <label className="text-sm text-gray-800 font-medium">Student A:</label>
                                             {editingIndex === idx && editingField === 'A' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-indigo-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-indigo-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(radarData, setRadarData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-indigo-600">{item.A}</span>
-                                                    <button onClick={() => startEdit(idx, 'A', item.A)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'A', item.A)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <label className="text-sm text-gray-600">Student B:</label>
+                                            <label className="text-sm text-gray-800 font-medium">Student B:</label>
                                             {editingIndex === idx && editingField === 'B' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-indigo-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-indigo-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(radarData, setRadarData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-blue-600">{item.B}</span>
-                                                    <button onClick={() => startEdit(idx, 'B', item.B)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'B', item.B)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
@@ -757,14 +757,14 @@ export default function SandboxSection() {
                                     <div className="flex items-center justify-between mb-3">
                                         {editingIndex === idx && editingField === 'name' ? (
                                             <div className="flex items-center gap-2">
-                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-red-500 rounded-lg" autoFocus />
+                                                <input type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="px-3 py-1 border-2 border-red-500 rounded-lg text-gray-900" autoFocus />
                                                 <button onClick={() => saveEdit(composedData, setComposedData)} className="p-1 bg-green-500 text-white rounded"><Check size={16} /></button>
                                                 <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={16} /></button>
                                             </div>
                                         ) : (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-lg font-bold">{item.name}</span>
-                                                <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-500" /></button>
+                                                <span className="text-lg font-bold text-red-600">{item.name}</span>
+                                                <button onClick={() => startEdit(idx, 'name', item.name)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={14} className="text-gray-700" /></button>
                                             </div>
                                         )}
                                         {composedData.length > 1 && (
@@ -775,47 +775,47 @@ export default function SandboxSection() {
                                     </div>
                                     <div className="grid grid-cols-3 gap-3">
                                         <div>
-                                            <label className="text-sm text-gray-600">UV:</label>
+                                            <label className="text-sm text-gray-800 font-medium">UV:</label>
                                             {editingIndex === idx && editingField === 'uv' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-red-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-red-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(composedData, setComposedData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-red-600">{item.uv}</span>
-                                                    <button onClick={() => startEdit(idx, 'uv', item.uv)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'uv', item.uv)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <label className="text-sm text-gray-600">PV:</label>
+                                            <label className="text-sm text-gray-800 font-medium">PV:</label>
                                             {editingIndex === idx && editingField === 'pv' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-red-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-red-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(composedData, setComposedData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-blue-600">{item.pv}</span>
-                                                    <button onClick={() => startEdit(idx, 'pv', item.pv)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'pv', item.pv)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
                                         <div>
-                                            <label className="text-sm text-gray-600">AMT:</label>
+                                            <label className="text-sm text-gray-800 font-medium">AMT:</label>
                                             {editingIndex === idx && editingField === 'amt' ? (
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-red-500 rounded" autoFocus />
+                                                    <input type="number" value={editValue} onChange={(e) => setEditValue(e.target.value)} className="w-full px-2 py-1 border-2 border-red-500 rounded text-gray-900" autoFocus />
                                                     <button onClick={() => saveEdit(composedData, setComposedData)} className="p-1 bg-green-500 text-white rounded"><Check size={12} /></button>
                                                     <button onClick={cancelEdit} className="p-1 bg-red-500 text-white rounded"><X size={12} /></button>
                                                 </div>
                                             ) : (
                                                 <div className="flex items-center gap-1">
                                                     <span className="font-bold text-orange-600">{item.amt}</span>
-                                                    <button onClick={() => startEdit(idx, 'amt', item.amt)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-500" /></button>
+                                                    <button onClick={() => startEdit(idx, 'amt', item.amt)} className="p-1 hover:bg-gray-100 rounded"><Edit2 size={12} className="text-gray-700" /></button>
                                                 </div>
                                             )}
                                         </div>
