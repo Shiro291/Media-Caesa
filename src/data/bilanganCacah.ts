@@ -65,9 +65,10 @@ export const bilanganCacahQuiz = [
         emoji: "🌟"
     },
     {
-        q: "Jika aku punya 9 Satuan, dan aku tambah 1 Satuan lagi, aku jadi apa?",
-        opts: ["10 Satuan", "1 Puluhan", "Keduanya benar", "Salah semua"],
+        q: "Perhatikan pernyataan berikut:\n1. Menjadi 10 Satuan\n2. Menjadi 1 Puluhan\n3. Menjadi 100\n4. Menjadi 0\n\nJika aku punya 9 Satuan, dan ditambah 1 Satuan lagi, manakah pernyataan yang paling tepat?",
+        opts: ["Hanya 1", "Hanya 2", "1 dan 2 benar", "3 dan 4 benar"],
         ans: 2,
-        emoji: "✨"
+        emoji: "✨",
+        isShapeSelection: false
     }
 ];
