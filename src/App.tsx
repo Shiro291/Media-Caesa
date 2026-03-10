@@ -11,6 +11,8 @@ const FirefighterQuiz = React.lazy(() => import('./features/firefighter-quiz'));
 const SimpleQuiz = React.lazy(() => import('./features/simple-quiz'));
 const LiteracyQuiz = React.lazy(() => import('./features/literacy-quiz'));
 const Statistics = React.lazy(() => import('./features/statistics'));
+const BilanganCacah = React.lazy(() => import('./features/bilangan-cacah'));
+const BilanganCacahQuiz = React.lazy(() => import('./features/bilangan-cacah-quiz'));
 
 // Simple loading fallback
 const LoadingSpinner = () => (
@@ -32,6 +34,8 @@ function App() {
           <Route path="/simple-quiz" element={<SimpleQuiz />} />
           <Route path="/literacy-quiz" element={<LiteracyQuiz />} />
           <Route path="/statistics" element={<Statistics />} />
+          <Route path="/bilangan-cacah" element={<BilanganCacah />} />
+          <Route path="/bilangan-cacah-quiz" element={<BilanganCacahQuiz />} />
         </Routes>
       </Suspense>
     </Router>

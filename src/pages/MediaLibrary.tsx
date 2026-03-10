@@ -62,6 +62,16 @@ const mediaList = [
         img: '/assets/firefighter/character.png',
         link: '/literacy-quiz',
         color: 'emerald'
+    },
+    {
+        id: 'bilangan-cacah',
+        title: 'Bilangan Cacah',
+        type: 'Pembelajaran',
+        age: 'Kelas 1-2 SD',
+        desc: 'Belajar nilai tempat puluhan dan satuan secara interaktif dengan blok-blok seru!',
+        img: '/assets/firefighter/character.png', // Temporary placeholder icon
+        link: '/bilangan-cacah',
+        color: 'sky'
     }
 ];
 

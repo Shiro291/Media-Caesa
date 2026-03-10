@@ -9,6 +9,7 @@ interface MediaShellProps {
     currentSlide?: number;
     totalSlides?: number;
     onSoundToggle?: () => void;
+    onBack?: () => void;
 }
 
 export default function MediaShell({
@@ -17,7 +18,8 @@ export default function MediaShell({
     bgClass = 'bg-gray-900',
     currentSlide,
     totalSlides,
-    onSoundToggle
+    onSoundToggle,
+    onBack
 }: MediaShellProps) {
     return (
         <div className={`fixed inset-0 w-full h-full flex flex-col transition-colors duration-500 overflow-hidden ${bgClass}`}>
@@ -26,12 +28,21 @@ export default function MediaShell({
             <div className="absolute top-0 left-0 right-0 p-4 z-50 flex justify-between items-center pointer-events-none">
 
                 {/* Left: Home */}
-                <Link
-                    to="/library"
-                    className="pointer-events-auto bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition shadow-lg text-white group ring-2 ring-black"
-                >
-                    <Home size={28} className="group-hover:scale-110 transition-transform" />
-                </Link>
+                {onBack ? (
+                    <button
+                        onClick={onBack}
+                        className="pointer-events-auto bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition shadow-lg text-white group ring-2 ring-transparent hover:ring-white/50"
+                    >
+                        <Home size={28} className="group-hover:scale-110 transition-transform" />
+                    </button>
+                ) : (
+                    <Link
+                        to="/library"
+                        className="pointer-events-auto bg-white/10 backdrop-blur-md p-3 rounded-full hover:bg-white/20 transition shadow-lg text-white group ring-2 ring-black"
+                    >
+                        <Home size={28} className="group-hover:scale-110 transition-transform" />
+                    </Link>
+                )}
 
                 {/* Center: Title or Progress */}
                 <div className="bg-black/40 px-6 py-2 rounded-full backdrop-blur-md border border-white/10 flex items-center gap-3">

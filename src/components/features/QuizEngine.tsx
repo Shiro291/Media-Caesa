@@ -15,13 +15,26 @@ interface QuizResultConfig {
 }
 
 interface QuizEngineProps {
-    title: string;
+    title?: string;
     questions: QuizQuestion[];
-    bgClass: string;
-    resultConfig: QuizResultConfig;
+    bgClass?: string;
+    resultConfig?: QuizResultConfig;
+    onComplete?: (score: number) => void;
 }
 
-export default function QuizEngine({ title, questions, bgClass, resultConfig }: QuizEngineProps) {
+export default function QuizEngine({
+    title = "Kuis",
+    questions,
+    bgClass = "bg-gray-900",
+    resultConfig = {
+        title: "Kuis Selesai!",
+        perfectMessage: "Luar Biasa! Sempurna!",
+        goodMessage: "Kerja Bagus!",
+        bgClass: "bg-gray-900",
+        textClass: "text-brand-blue"
+    },
+    onComplete
+}: QuizEngineProps) {
     const [qIndex, setQIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [selectedOpt, setSelectedOpt] = useState<number | null>(null);
@@ -64,6 +77,9 @@ export default function QuizEngine({ title, questions, bgClass, resultConfig }: 
             } else {
                 setIsFinished(true);
                 playSound('success');
+                if (onComplete) {
+                    onComplete(score);
+                }
             }
         }, 1200);
     };
