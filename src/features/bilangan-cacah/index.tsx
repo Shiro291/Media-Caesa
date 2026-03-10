@@ -12,7 +12,7 @@ export default function BilanganCacah() {
     const [mode, setMode] = useState<'arrows' | 'blocks'>('arrows');
     const { playSound } = useSound();
 
-    const maxNumber = mode === 'arrows' ? 999 : 100;
+    const maxNumber = 999;
 
     const handleNumberChange = (newVal: number) => {
         setNumber(newVal);
@@ -33,7 +33,7 @@ export default function BilanganCacah() {
             totalSlides={1}
             onSoundToggle={() => playSound('click')}
         >
-            <div className="w-full max-w-4xl px-4 flex flex-col gap-4 md:gap-6 pb-6">
+            <div className="w-full max-w-5xl px-4 flex flex-col gap-4 md:gap-6 pb-6 mt-16 md:mt-24">
 
                 {/* Header Information */}
                 <motion.div
@@ -56,7 +56,7 @@ export default function BilanganCacah() {
                             Panah Ajaib
                         </button>
                         <button
-                            onClick={() => { setMode('blocks'); setNumber(Math.min(number, 100)); }}
+                            onClick={() => { setMode('blocks'); }}
                             className={`px-5 py-1.5 rounded-full font-bold text-sm transition-all border-2 ${mode === 'blocks' ? 'bg-emerald-500 text-white shadow-md border-emerald-600' : 'text-gray-500 border-transparent hover:bg-white/60'}`}
                         >
                             Balok Susun
