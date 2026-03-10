@@ -23,7 +23,7 @@ export default function PlaceValueChart({ value }: PlaceValueChartProps) {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-end justify-center gap-3 sm:gap-4 min-h-[200px] sm:min-h-[250px] w-full p-2">
+                <div className="flex flex-wrap items-end justify-center gap-1 sm:gap-2 min-h-[140px] sm:min-h-[160px] w-full p-2">
                     <AnimatePresence>
                         {Array.from({ length: tens }).map((_, i) => (
                             <motion.div
@@ -31,7 +31,7 @@ export default function PlaceValueChart({ value }: PlaceValueChartProps) {
                                 initial={{ opacity: 0, y: -50, scale: 0.5 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
-                                className="w-6 sm:w-8 h-40 sm:h-48 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-sm shadow-lg border border-emerald-700 flex flex-col-reverse divide-y divide-emerald-500/40 transform hover:scale-105 transition-transform duration-200 cursor-pointer"
+                                className="w-5 sm:w-6 h-24 sm:h-32 bg-gradient-to-t from-emerald-600 to-emerald-400 rounded-sm shadow-lg border border-emerald-700 flex flex-col-reverse divide-y divide-emerald-500/40 transform hover:scale-105 transition-transform duration-200 cursor-pointer"
                             >
                                 {Array.from({ length: 10 }).map((_, j) => (
                                     <div key={j} className="flex-1 w-full bg-white/10" />
@@ -43,15 +43,15 @@ export default function PlaceValueChart({ value }: PlaceValueChartProps) {
             </div>
 
             {/* Units Container */}
-            <div className="flex-1 flex flex-col items-center gap-6 bg-orange-50/80 backdrop-blur-sm p-6 rounded-2xl border-2 border-orange-100 shadow-inner z-10 transition-colors duration-300">
-                <div className="text-center space-y-2">
-                    <h3 className="text-2xl sm:text-3xl font-black text-orange-700 tracking-wide">Satuan</h3>
-                    <div className="inline-block px-4 py-1 bg-orange-200 text-orange-800 rounded-full font-bold text-xl shadow-sm">
+            <div className="flex-1 flex flex-col items-center gap-4 bg-orange-50/80 backdrop-blur-sm p-4 sm:p-6 rounded-2xl border-2 border-orange-100 shadow-inner z-10 transition-colors duration-300">
+                <div className="text-center space-y-1 sm:space-y-2">
+                    <h3 className="text-xl sm:text-2xl font-black text-orange-700 tracking-wide">Satuan</h3>
+                    <div className="inline-block px-3 py-1 bg-orange-200 text-orange-800 rounded-full font-bold text-lg sm:text-xl shadow-sm">
                         {units}
                     </div>
                 </div>
 
-                <div className="flex flex-wrap items-end justify-center gap-2 sm:gap-3 min-h-[200px] sm:min-h-[250px] w-full max-w-[240px] content-end p-2 border-4 border-dashed border-orange-200/50 rounded-xl">
+                <div className="flex flex-wrap items-end justify-center gap-1.5 sm:gap-2 min-h-[140px] sm:min-h-[160px] w-full max-w-[200px] content-end p-2 border-2 sm:border-4 border-dashed border-orange-200/50 rounded-xl">
                     <AnimatePresence>
                         {Array.from({ length: units }).map((_, i) => (
                             <motion.div
@@ -59,7 +59,7 @@ export default function PlaceValueChart({ value }: PlaceValueChartProps) {
                                 initial={{ opacity: 0, y: -20, scale: 0.5, rotate: -20 }}
                                 animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
                                 exit={{ opacity: 0, scale: 0, transition: { duration: 0.2 } }}
-                                className="w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-br from-orange-400 to-orange-500 rounded-sm shadow-md border border-orange-600 transform hover:scale-110 hover:-rotate-6 transition-all duration-200 cursor-pointer"
+                                className="w-4 sm:w-5 h-4 sm:h-5 bg-gradient-to-br from-orange-400 to-orange-500 rounded-sm shadow-md border border-orange-600 transform hover:scale-110 hover:-rotate-6 transition-all duration-200 cursor-pointer"
                             />
                         ))}
                     </AnimatePresence>
