@@ -6,150 +6,72 @@ interface PlaceValueArrowsProps {
 
 export default function PlaceValueArrows({ value }: PlaceValueArrowsProps) {
     const chars = value.toString().split('');
-
     const allPlaces = [
-        {
-            label: 'Ratusan', short: 'Rts',
-            colorClass: 'from-sky-500 to-blue-600',
-            shadow: 'shadow-blue-200/50', border: 'border-blue-200',
-            hex: '#0ea5e9' // sky-500 
-        },
-        {
-            label: 'Puluhan', short: 'Plh',
-            colorClass: 'from-orange-400 to-red-500',
-            shadow: 'shadow-orange-200/50', border: 'border-orange-200',
-            hex: '#f97316' // orange-500
-        },
-        {
-            label: 'Satuan', short: 'Stn',
-            colorClass: 'from-emerald-400 to-green-600',
-            shadow: 'shadow-emerald-200/50', border: 'border-emerald-200',
-            hex: '#10b981' // emerald-500
-        }
+        { label: 'Ratusan', short: 'Rts', color: 'from-sky-500 to-blue-600', shadow: 'shadow-blue-200/50', border: 'border-blue-100' },
+        { label: 'Puluhan', short: 'Plh', color: 'from-orange-400 to-red-500', shadow: 'shadow-orange-200/50', border: 'border-orange-100' },
+        { label: 'Satuan', short: 'Stn', color: 'from-emerald-400 to-green-600', shadow: 'shadow-emerald-200/50', border: 'border-emerald-100' }
     ];
 
-    // Slice to get correct places
+    // Slice to get correct places. For 1 char, start at index 2 (Satuan). For 2 chars, start at 1 (Puluhan).
     const places = allPlaces.slice(3 - chars.length);
 
-    // Calculate X position percentage
-    const getXPosition = (index: number, count: number, spread: number) => {
-        if (count === 1) return 50;
-        const start = (100 - spread) / 2;
-        return start + (index * (spread / (count - 1)));
-    };
-
     return (
-        <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/80 shadow-2xl relative overflow-hidden w-full">
+        <div className="flex flex-col items-center justify-center p-4 sm:p-6 bg-white/60 backdrop-blur-xl rounded-3xl border border-white/80 shadow-2xl relative overflow-hidden min-h-[220px] md:min-h-[280px]">
             {/* Background decorative blob */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-amber-100/30 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="relative w-full max-w-2xl mx-auto h-[320px] sm:h-[360px] select-none">
+            {/* Columns structure for perfect vertical alignment */}
+            <div className={`grid gap-4 sm:gap-8 w-full relative z-10 max-w-3xl mx-auto ${chars.length === 3 ? 'grid-cols-3' : chars.length === 2 ? 'grid-cols-2 max-w-md' : 'grid-cols-1 max-w-[160px]'
+                }`}>
+                {chars.map((char, i) => (
+                    <div key={`col-${i}-${char}`} className="flex flex-col items-center w-full">
 
-                {/* SVG Curves connecting digits to boxes */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ overflow: 'visible' }}>
-                    <defs>
-                        {places.map((place, i) => (
-                            <marker
-                                key={`marker-${i}`}
-                                id={`arrow-${i}`}
-                                viewBox="0 0 10 10"
-                                refX="5" refY="10"
-                                markerWidth="6" markerHeight="6"
-                                orient="auto"
-                            >
-                                <path d="M 0 0 L 5 10 L 10 0 Z" fill={place.hex} />
-                            </marker>
-                        ))}
-                    </defs>
-
-                    {chars.map((char, i) => {
-                        const digitSpread = chars.length === 3 ? 90 : chars.length === 2 ? 60 : 0;
-                        const boxSpread = chars.length === 3 ? 60 : chars.length === 2 ? 40 : 0;
-
-                        const startX = getXPosition(i, chars.length, digitSpread);
-                        const endX = getXPosition(i, chars.length, boxSpread);
-
-                        // Y positions roughly mapped to the container height
-                        const startY = 90; // Just below the digit
-                        const endY = 220; // Just above the box (adjusted for mobile/desktop below)
-
-                        // Cubic bezier points to make a smooth S-curve down
-                        const cp1X = startX;
-                        const cp1Y = startY + (endY - startY) * 0.5;
-                        const cp2X = endX;
-                        const cp2Y = startY + (endY - startY) * 0.5;
-
-                        return (
-                            <motion.path
-                                key={`path-${i}-${char}`}
-                                initial={{ pathLength: 0, opacity: 0 }}
-                                animate={{ pathLength: 1, opacity: 1 }}
-                                transition={{ duration: 0.8, delay: 0.3 + (i * 0.2), ease: "easeOut" }}
-                                d={`M ${startX}% ${startY} C ${cp1X}% ${cp1Y}, ${cp2X}% ${cp2Y}, ${endX}% ${endY}`}
-                                fill="none"
-                                stroke={places[i].hex}
-                                strokeWidth="4"
-                                strokeDasharray="8 8" // dashed line for fun style
-                                markerEnd={`url(#arrow-${i})`}
-                            />
-                        );
-                    })}
-                </svg>
-
-                {/* The Main Numbers (Top Row) */}
-                {chars.map((char, i) => {
-                    const digitSpread = chars.length === 3 ? 90 : chars.length === 2 ? 60 : 0;
-                    const xPos = getXPosition(i, chars.length, digitSpread);
-
-                    return (
-                        <div
-                            key={`digit-${i}-${char}`}
-                            className="absolute top-0 flex justify-center -translate-x-1/2"
-                            style={{ left: `${xPos}%` }}
+                        {/* The Main Number */}
+                        <motion.div
+                            className={`text-6xl sm:text-7xl md:text-9xl font-black bg-clip-text text-transparent bg-gradient-to-b ${places[i].color} drop-shadow-sm text-center mb-2 h-20 sm:h-24 md:h-32 flex items-center`}
+                            initial={{ y: -30, opacity: 0, scale: 0.5 }}
+                            animate={{ y: 0, opacity: 1, scale: 1 }}
+                            transition={{ type: 'spring', bounce: 0.6, delay: i * 0.1 }}
                         >
+                            {char}
+                        </motion.div>
+
+                        {/* Vertical Arrow */}
+                        <div className="flex justify-center h-12 sm:h-16 md:h-20 w-full mb-4">
                             <motion.div
-                                className={`text-6xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-b ${places[i].colorClass} drop-shadow-sm text-center`}
-                                initial={{ y: -30, opacity: 0, scale: 0.5 }}
-                                animate={{ y: 0, opacity: 1, scale: 1 }}
-                                transition={{ type: 'spring', bounce: 0.6, delay: i * 0.1 }}
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "100%", opacity: 1 }}
+                                transition={{ duration: 0.4, delay: 0.2 + (i * 0.1) }}
+                                className="w-1.5 sm:w-2 bg-gradient-to-b from-gray-200 to-gray-400 relative rounded-full"
                             >
-                                {char}
+                                {/* Arrowhead */}
+                                <div className="absolute bottom-[-2px] left-1/2 -translate-x-1/2 w-0 h-0 
+                                    border-l-[8px] sm:border-l-[12px] border-l-transparent 
+                                    border-r-[8px] sm:border-r-[12px] border-r-transparent 
+                                    border-t-[10px] sm:border-t-[14px] border-t-gray-400"
+                                />
                             </motion.div>
                         </div>
-                    );
-                })}
 
-                {/* The Value Boxes (Bottom Row) */}
-                {chars.map((char, i) => {
-                    const boxSpread = chars.length === 3 ? 60 : chars.length === 2 ? 40 : 0;
-                    const xPos = getXPosition(i, chars.length, boxSpread);
-
-                    return (
-                        <div
-                            key={`box-${i}-${char}`}
-                            className="absolute top-[230px] flex justify-center -translate-x-1/2 w-[110px] sm:w-[140px]"
-                            style={{ left: `${xPos}%` }}
+                        {/* Label and Value Box */}
+                        <motion.div
+                            initial={{ y: 30, scale: 0.5, opacity: 0 }}
+                            animate={{ y: 0, scale: 1, opacity: 1 }}
+                            transition={{ type: 'spring', bounce: 0.5, delay: 0.4 + i * 0.1 }}
+                            className={`w-full flex flex-col items-center justify-center py-3 px-2 sm:p-5 bg-white rounded-2xl shadow-xl ${places[i].shadow} border-2 ${places[i].border}`}
+                            whileHover={{ y: -5, scale: 1.05 }}
                         >
-                            <motion.div
-                                initial={{ y: 30, scale: 0.5, opacity: 0 }}
-                                animate={{ y: 0, scale: 1, opacity: 1 }}
-                                transition={{ type: 'spring', bounce: 0.5, delay: 0.6 + i * 0.1 }}
-                                className={`w-full flex flex-col items-center justify-center py-3 px-2 sm:py-4 bg-white rounded-2xl shadow-xl ${places[i].shadow} border-y-4 border-x-2 ${places[i].border}`}
-                                whileHover={{ y: -5, scale: 1.05 }}
-                            >
-                                <span className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-widest mb-1">
-                                    <span className="hidden sm:inline">{places[i].label}</span>
-                                    <span className="inline sm:hidden">{places[i].short}</span>
-                                </span>
+                            <span className={`text-[10px] sm:text-xs md:text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r ${places[i].color} uppercase tracking-wider`}>
+                                <span className="hidden sm:inline">{places[i].label}</span>
+                                <span className="inline sm:hidden">{places[i].short}</span>
+                            </span>
 
-                                <span className={`text-2xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r ${places[i].colorClass}`}>
-                                    {char}{'0'.repeat(places.length - 1 - i)}
-                                </span>
-                            </motion.div>
-                        </div>
-                    );
-                })}
-
+                            <span className="text-2xl sm:text-3xl md:text-5xl font-black text-gray-800 mt-1">
+                                {char}{'0'.repeat(places.length - 1 - i)}
+                            </span>
+                        </motion.div>
+                    </div>
+                ))}
             </div>
         </div>
     );
