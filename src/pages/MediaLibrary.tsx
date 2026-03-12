@@ -72,6 +72,16 @@ const mediaList = [
         img: '/assets/firefighter/character.png', // Temporary placeholder icon
         link: '/bilangan-cacah',
         color: 'sky'
+    },
+    {
+        id: 'addition-subtraction',
+        title: 'Tambah & Kurang',
+        type: 'Pembelajaran',
+        age: 'Kelas 1-2 SD',
+        desc: 'Visualisasi penjumlahan dan pengurangan 1-20 dengan objek 3D interaktif yang seru!',
+        img: '/assets/firefighter/character.png', 
+        link: '/addition-subtraction',
+        color: 'emerald'
     }
 ];
 

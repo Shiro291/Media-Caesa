@@ -13,6 +13,7 @@ const LiteracyQuiz = React.lazy(() => import('./features/literacy-quiz'));
 const Statistics = React.lazy(() => import('./features/statistics'));
 const BilanganCacah = React.lazy(() => import('./features/bilangan-cacah'));
 const BilanganCacahQuiz = React.lazy(() => import('./features/bilangan-cacah-quiz'));
+const AdditionSubtraction = React.lazy(() => import('./features/addition-subtraction'));
 
 // Simple loading fallback
 const LoadingSpinner = () => (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/bilangan-cacah" element={<BilanganCacah />} />
           <Route path="/bilangan-cacah-quiz" element={<BilanganCacahQuiz />} />
+          <Route path="/addition-subtraction" element={<AdditionSubtraction />} />
         </Routes>
       </Suspense>
     </Router>

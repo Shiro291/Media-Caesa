@@ -1,6 +1,6 @@
 import { useRef, useCallback } from 'react';
 
-type SoundType = 'click' | 'siren' | 'water' | 'fire' | 'engine' | 'success';
+type SoundType = 'click' | 'siren' | 'water' | 'fire' | 'engine' | 'success' | 'error';
 
 export const useSound = () => {
     const audioCtxRef = useRef<AudioContext | null>(null);
@@ -69,6 +69,16 @@ export const useSound = () => {
                 gain.gain.linearRampToValueAtTime(0, t + 0.5);
                 osc.start(t);
                 osc.stop(t + 0.5);
+                break;
+
+            case 'error':
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(150, t);
+                osc.frequency.linearRampToValueAtTime(100, t + 0.3);
+                gain.gain.setValueAtTime(0.1, t);
+                gain.gain.linearRampToValueAtTime(0, t + 0.3);
+                osc.start(t);
+                osc.stop(t + 0.3);
                 break;
 
             case 'water':

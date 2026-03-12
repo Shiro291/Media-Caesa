@@ -1,52 +1,53 @@
-# Plan: Media Pembelajaran Bilangan Cacah (Place Value 1-100)
+# Plan: Media Pembelajaran Penambahan & Pengurangan (Interaktif & 3D-ish)
 
 ## Deskripsi Proyek
-Membangun media pembelajaran interaktif untuk anak SD kelas awal (SD Kelas 1-2) mengenai "Bilangan Cacah", khususnya nilai tempat (puluhan dan satuan) untuk rentang angka 1-100. Media ini akan menggabungkan visualisasi blok yang menarik, suara/musik ceria, dan kuis interaktif di akhir sesi.
+Membangun modul pembelajaran interaktif baru untuk anak SD kelas awal (SD Kelas 1-2) mengenai "Penambahan dan Pengurangan" (Bilangan 1-20). Media ini akan menghadirkan visualisasi yang lebih baik daripada sebelumnya, menggunakan elemen yang *feel*-nya 3D, animasi halus (benda bergabung atau pecah), dan suara interaktif yang imersif.
 
 ## Tim Skill (Total: 5 Skill)
 1. **`plan-writing`**: Digunakan untuk menyusun roadmap dan langkah-langkah implementasi yang terstruktur dan terverifikasi.
-2. **`ui-ux-pro-max`**: Digunakan untuk mendesain antarmuka yang "Premium" dan "Wowed" dengan Glassmorphism, animasi mikrokontrol yang halus, dan skema warna yang ceria bagi anak-anak.
-3. **`game-development`**: Digunakan untuk merancang mekanisme pembelajaran yang menyenangkan (fun learning loops), sistem reward, dan engine kuis yang interaktif.
-4. **`beautiful-prose`**: Digunakan untuk menulis narasi edukatif dan instruksi dalam Bahasa Indonesia yang ramah anak, mudah dimengerti, dan tidak membosankan.
-5. **`canvas-design`**: Digunakan untuk merancang elemen visual dinamis seperti blok-blok angka, representasi visual nilai tempat, dan transisi visual antar angka secara real-time.
+2. **`ui-ux-pro-max`**: Digunakan untuk mendesain antarmuka yang "Premium" dengan Glassmorphism, skema warna yang dinamis (misal: Hijau untuk tambah, Merah untuk kurang), dan animasi mikrokontrol yang responsif.
+3. **`threejs-animation`**: Digunakan untuk menciptakan elemen visual yang terasa 3D (seperti bola-bola atau apel 3D) yang dapat bergerak, memantul, dan bertambah/berkurang di dalam sebuah "wadah" (bucket).
+4. **`game-development`**: Digunakan untuk merancang mekanisme logika matematika penambahan/pengurangan, sistem *win-streak*, dan engine kuis yang seru.
+5. **`beautiful-prose`**: Digunakan untuk menulis narasi edukatif, instruksi, dan dukungan semangat dalam Bahasa Indonesia yang ramah anak.
 
 ---
 
 ## Roadmap Pengembangan
 
-### Fase 1: Perancangan Konten & Narasi (`beautiful-prose`)
-- [x] Menyusun naskah penjelasan nilai tempat (Satuan vs Puluhan) yang sederhana namun imajinatif.
-- [x] Membuat library 100 fakta menarik atau instruksi singkat yang muncul saat angka berubah.
-- [x] **Verifikasi**: Naskah tersedia dalam format `json` atau `ts` data untuk diintegrasikan.
+### Fase 1: Perancangan Konsep & Aset (`beautiful-prose` & `plan-writing`)
+- [ ] Menyusun naskah penjelasan konsep Penambahan (menggabungkan) dan Pengurangan (memisahkan/menghilangkan).
+- [ ] Menentukan jenis objek 3D yang akan digunakan (Bola, Apel, atau Bintang) dan suara pop/slide yang seru.
+- [ ] **Verifikasi**: Struktur data soal (1-20) dan naskah narasi siap digunakan.
 
-### Fase 2: Desain Visual & Antarmuka (`ui-ux-pro-max` & `canvas-design`)
-- [x] Mendesain "Place Value Chart" dengan efek Glassmorphism.
-- [x] Membuat komponen blok visual (Blok Satuan & Batang Puluhan) menggunakan SVG/Canvas.
-- [x] Menentukan palet warna ceria (Emerald, Sky Blue, Sunset Orange) yang ramah mata.
-- [x] **Verifikasi**: Mockup visual komponen dirender dan terlihat cantik di berbagai ukuran layar.
+### Fase 2: Desain Visual & UI Premium (`ui-ux-pro-max`)
+- [ ] Membuat layout "Arena Matematika" dengan Glassmorphism.
+- [ ] Mendesain kontrol (Slider/Tombol) yang terasa tactile dan responsif.
+- [ ] Menentukan palet warna: Emerald/Sky (Tambah) dan Rose/Amber (Kurang).
+- [ ] **Verifikasi**: Mockup UI dirender dan terlihat modern di browser.
 
-### Fase 3: Mekanisme Interaktif & Musik (`game-development`)
-- [x] Mengimplementasikan slider atau input angka 1-100 yang memicu perubahan visual blok secara real-time.
-- [x] Menambahkan feedback suara (Sound Effects): Suara "pop" saat blok muncul, musik latar ceria yang bisa di-mute.
-- [x] Merancang aliran progres: Belajar -> Latihan Singkat -> Kuis Final.
-- [x] **Verifikasi**: Perubahan angka memicu suara dan animasi blok tanpa lag.
+### Fase 3: Visualisasi Interaktif & "3D" (`threejs-animation`)
+- [ ] Mengimplementasikan render sederhana (Three.js/react-three-fiber) untuk menampilkan objek-objek 3D.
+- [ ] Membuat animasi "Gabung": Objek baru terbang masuk ke dalam wadah menambah jumlah.
+- [ ] Membuat animasi "Pecah/Hilang": Objek meledak (pop) atau terbang keluar saat pengurangan.
+- [ ] **Verifikasi**: Objek bergerak mulus tanpa lag saat jumlah berubah.
 
-### Fase 4: Engine Kuis Edukatif (`game-development` & `ui-ux-pro-max`)
-- [x] Membangun 10 soal kuis subjektif dan objektif (misal: "Manakah blok yang menunjukkan angka 42?").
-- [x] Menambahkan layar skor akhir yang penuh dengan animasi perayaan (confetti).
-- [x] **Verifikasi**: Kuis dapat diselesaikan dari awal hingga akhir dengan perhitungan skor yang tepat.
+### Fase 4: Engine Matematika & Reward (`game-development`)
+- [ ] Membangun logika kalkulasi otomatis yang terhubung langsung dengan visualisasi 3D.
+- [ ] Menambahkan SFX (Sound Effects) interaktif: Suara benturan lembut saat bola masuk, suara "poof" saat hilang.
+- [ ] Menyertakan sistem perayaan sederhana saat anak mencapai hasil yang benar.
+- [ ] **Verifikasi**: Hasil visual selalu akurat dengan angka matematika yang ditampilkan.
 
-### Fase 5: Final Polish & Animasi (`ui-ux-pro-max`)
-- [x] Menerapkan Framer Motion untuk transisi antar halaman dan kemunculan elemen.
-- [x] Optimasi performa aset gambar dan audio.
-- [x] **Verifikasi**: Aplikasi berjalan mulus (60fps) dan waktu loading sangat cepat.
+### Fase 5: Kuis Tantangan & Polish (`ui-ux-pro-max` & `game-development`)
+- [ ] Membuat kuis khusus dengan tantangan waktu atau tantangan "Isi Wadah".
+- [ ] Optimasi performa aset 3D (low-poly) agar tetap ringan di perangkat mobile/sekolah.
+- [ ] **Verifikasi**: Kuis berjalan mulus dan memberikan hasil evaluasi yang jelas.
 
 ---
 
 ## Kriteria Selesai (Done When)
-- [ ] Anak-anak dapat melihat visualisasi "Puluhan" dan "Satuan" secara otomatis saat memilih angka 1-100.
-- [ ] Terdapat musik latar dan efek suara yang meningkatkan keseruan belajar.
-- [ ] Kuis akhir dapat diakses dan memberikan feedback skor yang jelas.
-- [ ] UI terlihat modern, bersih, dan sangat menarik (Professional & Premium).
+- [ ] Anak-anak bisa melihat benda-benda 3D bertambah/berkurang secara visual sesuai angka yang dipilih.
+- [ ] Ada transisi animasi yang jelas antara proses "Tambah" dan "Kurang".
+- [ ] Terdapat efek suara interaktif yang membuat belajar terasa seperti bermain game.
+- [ ] Antarmuka terlihat premium (Pro-Max level) dan sangat menarik bagi anak-anak.
 
-**Catatan**: Implementasi teknis akan dimulai setelah rencana ini disetujui.
+**Catatan**: Implementasi teknis akan segera dimulai setelah rencana ini disetujui.
