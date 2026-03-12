@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, ContactShadows, Environment, Center } from '@react-three/drei';
+import { Float, ContactShadows, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface MathBallProps {
