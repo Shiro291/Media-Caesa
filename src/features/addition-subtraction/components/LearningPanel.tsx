@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import EquationDisplay from './EquationDisplay';
@@ -21,11 +22,11 @@ interface LearningPanelProps {
     resetArena: () => void;
 }
 
-export default function LearningPanel({
+const LearningPanel = ({
     num1, num2, mode, result, phase, removedIds, shakeValidateBox,
     handleNum1Change, handleNum2Change, handleModeChange,
     setPhase, setRemovedIds, setShakeValidateBox, playSound, resetArena
-}: LearningPanelProps) {
+}: LearningPanelProps) => {
     return (
         <motion.div 
             key="learning-controls-panel"
@@ -143,4 +144,6 @@ export default function LearningPanel({
             </div>
         </motion.div>
     );
-}
+};
+
+export default React.memo(LearningPanel);

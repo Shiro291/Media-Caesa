@@ -1,8 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, Suspense, lazy } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Maximize2, X } from 'lucide-react';
 import MediaShell from '../../components/layout/MediaShell';
-import MathArena3D from '../../components/features/MathArena3D';
+const MathArena3D = lazy(() => import('../../components/features/MathArena3D'));
 import { useSound } from '../../hooks/useSound';
 import LearningPanel from './components/LearningPanel';
 import QuizPanel from './components/QuizPanel';
@@ -22,35 +22,35 @@ export default function AdditionSubtraction() {
     const [removedIds, setRemovedIds] = useState<number[]>([]);
     const [shakeValidateBox, setShakeValidateBox] = useState(false);
 
-    const resetArena = () => {
+    const resetArena = useCallback(() => {
         setPhase('separate');
         setRemovedIds([]);
-    };
+    }, []);
 
-    const handleModeChange = (newMode: 'addition' | 'subtraction') => {
+    const handleModeChange = useCallback((newMode: 'addition' | 'subtraction') => {
         setMode(newMode);
         resetArena();
         playSound('click');
         if (newMode === 'subtraction' && num1 < num2) {
             setNum2(num1);
         }
-    };
+    }, [num1, num2, playSound, resetArena]);
 
-    const handleNum1Change = (val: number) => {
+    const handleNum1Change = useCallback((val: number) => {
         setNum1(val);
         resetArena();
         playSound('click');
         if (mode === 'subtraction' && val < num2) {
             setNum2(val);
         }
-    };
+    }, [mode, num2, playSound, resetArena]);
 
-    const handleNum2Change = (val: number) => {
+    const handleNum2Change = useCallback((val: number) => {
         if (mode === 'subtraction' && val > num1) return;
         setNum2(val);
         resetArena();
         playSound('click');
-    };
+    }, [mode, num1, playSound, resetArena]);
 
     const [showQuiz, setShowQuiz] = useState(false);
     const [quizQuestion, setQuizQuestion] = useState({ a: 0, b: 0, op: '+' as '+' | '-' });
@@ -74,7 +74,7 @@ export default function AdditionSubtraction() {
         resetArena();
     }, []);
 
-    const checkAnswer = () => {
+    const checkAnswer = useCallback(() => {
         const correct = quizQuestion.op === '+' ? quizQuestion.a + quizQuestion.b : quizQuestion.a - quizQuestion.b;
         if (parseInt(userAnswer) === correct) {
             setFeedback('correct');
@@ -87,14 +87,14 @@ export default function AdditionSubtraction() {
             playSound('error');
             setTimeout(() => setFeedback(null), 1500);
         }
-    };
+    }, [quizQuestion, userAnswer, playSound, generateQuestion]);
 
-    const handleShowQuiz = (val: boolean) => {
+    const handleShowQuiz = useCallback((val: boolean) => {
         setShowQuiz(val);
         resetArena();
         playSound('click');
         if (val) generateQuestion();
-    };
+    }, [playSound, resetArena, generateQuestion]);
 
     return (
         <MediaShell
@@ -177,18 +177,25 @@ export default function AdditionSubtraction() {
                                     <Maximize2 size={24} className="group-hover:scale-110 transition-transform" />
                                 )}
                             </button>
-                            <MathArena3D 
-                                num1={!showQuiz ? num1 : quizQuestion.a}
-                                num2={!showQuiz ? num2 : quizQuestion.b}
-                                mode={!showQuiz ? mode : (quizQuestion.op === '+' ? 'addition' : 'subtraction')}
-                                phase={phase}
-                                removedIds={removedIds}
-                                onToggleBall={(id) => {
-                                    setRemovedIds(prev => 
-                                        prev.includes(id) ? prev.filter(rId => rId !== id) : [...prev, id]
-                                    )
-                                }}
-                            />
+                            <Suspense fallback={
+                                <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-50 rounded-[inherit] z-0">
+                                    <div className="w-16 h-16 border-4 border-slate-200 border-t-orange-500 rounded-full animate-spin"></div>
+                                    <p className="mt-4 font-black text-slate-400 font-baloo animate-pulse">Memuat 3D...</p>
+                                </div>
+                            }>
+                                <MathArena3D 
+                                    num1={!showQuiz ? num1 : quizQuestion.a}
+                                    num2={!showQuiz ? num2 : quizQuestion.b}
+                                    mode={!showQuiz ? mode : (quizQuestion.op === '+' ? 'addition' : 'subtraction')}
+                                    phase={phase}
+                                    removedIds={removedIds}
+                                    onToggleBall={(id) => {
+                                        setRemovedIds(prev => 
+                                            prev.includes(id) ? prev.filter(rId => rId !== id) : [...prev, id]
+                                        )
+                                    }}
+                                />
+                            </Suspense>
                         </div>
 
                 </div>

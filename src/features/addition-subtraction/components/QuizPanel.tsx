@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import { RotateCcw } from 'lucide-react';
 import { getDynamicFontSize } from './utils';
@@ -12,9 +13,9 @@ interface QuizPanelProps {
     generateQuestion: () => void;
 }
 
-export default function QuizPanel({
+const QuizPanel = ({
     score, quizQuestion, userAnswer, feedback, setUserAnswer, checkAnswer, generateQuestion
-}: QuizPanelProps) {
+}: QuizPanelProps) => {
     return (
         <motion.div 
             key="quiz-box"
@@ -61,4 +62,6 @@ export default function QuizPanel({
             </button>
         </motion.div>
     );
-}
+};
+
+export default React.memo(QuizPanel);

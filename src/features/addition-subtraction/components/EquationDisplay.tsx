@@ -1,8 +1,11 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import { getDynamicFontSize } from './utils';
 
-export default function EquationDisplay({ num1, num2, result, mode }: { num1: number, num2: number, result: number, mode: 'addition' | 'subtraction' }) {
+type EquationDisplayProps = { num1: number, num2: number, result: number, mode: 'addition' | 'subtraction' };
+
+const EquationDisplay = ({ num1, num2, result, mode }: EquationDisplayProps) => {
     return (
         <div className="flex flex-nowrap items-center justify-between w-full">
             <motion.div 
@@ -36,4 +39,6 @@ export default function EquationDisplay({ num1, num2, result, mode }: { num1: nu
             </motion.div>
         </div>
     );
-}
+};
+
+export default memo(EquationDisplay);

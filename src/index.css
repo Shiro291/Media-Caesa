@@ -14,3 +14,12 @@ body {
   min-height: 100vh;
   @apply bg-gray-900 text-white; /* Default dark mode base */
 }
+
+/* Fix mobile 300ms tap delay & double-tap zoom issues */
+button, 
+a, 
+input[type="range"], 
+input[type="number"],
+input[type="text"] {
+  touch-action: manipulation;
+}
