@@ -45,7 +45,47 @@
 
 ---
 
-## Implementation Tasks (Based on Option 1 + Option 2 Hybrid)
+## Subtraction Visualization Brainstorm (Process-Oriented)
+
+The current "Merging" state works well for Addition ($+$) but is conceptually confusing for Subtraction ($-$). Here are 4 process-driven concepts to visualize "Taking Away":
+
+### 1. The "Laser Hunter" (Destructive Pursuit)
+**Concept:** `Num1` (Blue) spheres are the targets. `Num2` (Red) spheres transform into small "projectiles" or "energy bolts".
+*   **Action:** One by one, a Red sphere flies into a Blue sphere.
+*   **Result:** Both vanish in a "poof" of particles.
+*   **Effect:** Children see exactly how many are being removed as they disappear pairs.
+
+### 2. The "Ghost Overlay" (Phase Nullification)
+**Concept:** `Num2` (Red) spheres turn into semi-transparent "Negative/Ghost" spheres.
+*   **Action:** They fly and overlap exactly onto the first `Num2` spheres of the `Num1` group.
+*   **Result:** When they touch, they "cancel out" and both shatter or fade away.
+*   **Effect:** Visualizes the mathematical "cancellation" principle.
+
+### 3. The "Vacuum Harvester" (Extraction Tool)
+**Concept:** A small 3D "Vacuum" nozzle or "Claw" appearing at the top of the arena.
+*   **Action:** It descends and sucks up exactly `Num2` spheres from the pile.
+*   **Result:** Those spheres move into the nozzle and disappear.
+*   **Effect:** Very intuitive "Taking Away" physical metaphor.
+
+### 4. The "Sinking Depth" (Z-Axis Removal)
+**Concept:** `Num1` (Blue) spheres are on a platform.
+*   **Action:** `Num2` number of spheres slowly descend *through* the floor of the platform.
+*   **Result:** They become transparent and vanish once they pass below.
+*   **Effect:** Minimalist and clean, representing spheres leaving the "active area".
+
+---
+
+## Decision Log (Brainstorming Phase)
+
+| Decision ID | Decision | Alternatives Considered | Rationale |
+| :--- | :--- | :--- | :--- |
+| **D-SUB-01** | Move away from "Merging" for Subtraction | Simple reverse animation | "Merging" implies combining; Subtraction needs a clear "Removal" process to be educational. |
+| **D-LAYOUT-01** | Maintain 50/50 Panel Layout | Full-width center layout | User explicitly preferred the previous balanced version; easier for rapid control usage. |
+| **D-BOX-01** | Use Absolute Proportion Boxes | CSS Flex/Grow scaling | Percentages ensure strict adherence to container boundaries, preventing right-side bleeding. |
+
+---
+
+## Implementation Tasks (Updated)
 
 ### Task 1: Color-Coded Material System
 **Files:** 
