@@ -45,33 +45,27 @@
 
 ---
 
-## Subtraction Visualization Brainstorm (Process-Oriented)
+## Finalized Subtraction Strategy: "Option 1 (Interactive Pop)"
+*Selected based on highest combined score in Feasibility, Engagement, and Performance, incorporating the User's interactive tapping requirement.*
 
-The current "Merging" state works well for Addition ($+$) but is conceptually confusing for Subtraction ($-$). Here are 4 process-driven concepts to visualize "Taking Away":
+**Concept Foundation:** We are taking **Option 1 (Destructive Pursuit / Popping)** and replacing the "auto-lasers" with the student's finger/mouse. Instead of a passive animation, the student actively *performs* the subtraction.
 
-### 1. The "Laser Hunter" (Destructive Pursuit)
-**Concept:** `Num1` (Blue) spheres are the targets. `Num2` (Red) spheres transform into small "projectiles" or "energy bolts".
-*   **Action:** One by one, a Red sphere flies into a Blue sphere.
-*   **Result:** Both vanish in a "poof" of particles.
-*   **Effect:** Children see exactly how many are being removed as they disappear pairs.
+*   **Setup ($7 - 3 = ?$):** The arena initially renders 7 balls (`Num1`).
+*   **Action:** The student is prompted to "take away" balls. They do this by physically tapping/clicking balls in the 3D space to 'remove' them (balls pop/disappear).
+*   **Validation:** The answer is **NOT** automatically checked. The student must intentionally press a **"Kirim Jawaban" (Submit Answer)** button when they believe they have removed the correct amount.
+*   **Resolution:** 
+    *   **Correct:** If the number of removed balls equals `Num2`, success feedback plays, score increases, and the next question loads.
+    *   **Incorrect:** If wrong, the wrong indicator shakes, and the arena resets (balls reappear) so the student can try again.
 
-### 2. The "Ghost Overlay" (Phase Nullification)
-**Concept:** `Num2` (Red) spheres turn into semi-transparent "Negative/Ghost" spheres.
-*   **Action:** They fly and overlap exactly onto the first `Num2` spheres of the `Num1` group.
-*   **Result:** When they touch, they "cancel out" and both shatter or fade away.
-*   **Effect:** Visualizes the mathematical "cancellation" principle.
+**Why Option 1 (Interactive Pop) is the best approach:**
+1.  **Feasibility (High):** R3F makes mesh `onClick` events trivial (as guided by the `threejs-interaction` skill). 
+2.  **Engagement (Maximum):** Popping bubbles/balls is universally satisfying for children. Transforms passive viewing into a tactile puzzle with agency.
+3.  **Performance (Excellent):** Avoids complex physics engines, 3D pathfinding (Option 3 Vacuum), or transparent depth sorting layer issues (Option 2 Ghost). Relies on simple, highly optimized scale transitions.
 
-### 3. The "Vacuum Harvester" (Extraction Tool)
-**Concept:** A small 3D "Vacuum" nozzle or "Claw" appearing at the top of the arena.
-*   **Action:** It descends and sucks up exactly `Num2` spheres from the pile.
-*   **Result:** Those spheres move into the nozzle and disappear.
-*   **Effect:** Very intuitive "Taking Away" physical metaphor.
-
-### 4. The "Sinking Depth" (Z-Axis Removal)
-**Concept:** `Num1` (Blue) spheres are on a platform.
-*   **Action:** `Num2` number of spheres slowly descend *through* the floor of the platform.
-*   **Result:** They become transparent and vanish once they pass below.
-*   **Effect:** Minimalist and clean, representing spheres leaving the "active area".
+**Relevant Agent Skills Utilized:**
+1.  `threejs-interaction`: For implementing robust 3D raycasted `onClick` events and changing cursor states on hover.
+2.  `threejs-animation`: For smooth scale interpolations during the "pop" effect.
+3.  `threejs-fundamentals`: For basic scene and state management of visible vs. hidden meshes.
 
 ---
 
@@ -79,43 +73,35 @@ The current "Merging" state works well for Addition ($+$) but is conceptually co
 
 | Decision ID | Decision | Alternatives Considered | Rationale |
 | :--- | :--- | :--- | :--- |
-| **D-SUB-01** | Move away from "Merging" for Subtraction | Simple reverse animation | "Merging" implies combining; Subtraction needs a clear "Removal" process to be educational. |
+| **D-SUB-01** | **Interactive Pop & Remove** | Automated "Sinking/Fusing" animations | Direct interaction (tapping) maximizes educational engagement and perfectly visualizes "taking away". |
 | **D-LAYOUT-01** | Maintain 50/50 Panel Layout | Full-width center layout | User explicitly preferred the previous balanced version; easier for rapid control usage. |
 | **D-BOX-01** | Use Absolute Proportion Boxes | CSS Flex/Grow scaling | Percentages ensure strict adherence to container boundaries, preventing right-side bleeding. |
 
 ---
 
-## Implementation Tasks (Updated)
+## Implementation Tasks (Refined for Interactive Subtraction)
 
-### Task 1: Color-Coded Material System
-**Files:** 
-- Modify: `src/components/features/MathArena3D.tsx`
+### Task 1: Color-Coded Material System & State
+**Files:** `src/components/features/MathArena3D.tsx`
+**Step 1:** Define tracking state for subtracted balls (e.g., `setRemovedIds([])`).
+**Step 2:** Ensure addition still uses the two-color (Blue/Red) system, but subtraction initially uses just one color (Blue) for the total pool.
 
-**Step 1:** Define distinct constant colors for Num1 (Blue) and Num2 (Red).
-**Step 2:** Update `MathBall` to accept a state-controlled color prop.
-**Step 3:** Implement a "Merging" state color (e.g., `#2dd4bf` teal).
+### Task 2: Interactive 'onClick' Logic
+**Files:** `src/components/features/MathArena3D.tsx`
+**Step 1:** Add `onClick` handlers to the `MathBall` meshes.
+**Step 2:** When clicked in subtraction 'play' mode, add the ball's ID to `removedIds` array (unlimited taps allowed, no auto-stopping).
+**Step 3:** Change mouse cursor to pointer on hover.
 
-### Task 2: Multi-Group coordinate logic
-**Files:** 
-- Modify: `src/components/features/MathArena3D.tsx`
+### Task 3: The "Pop" Animation & Manual Reset
+**Files:** `src/components/features/MathArena3D.tsx`
+**Step 1:** Use scale transition so when a ball's ID enters `removedIds`, it scales to 0 and 'pops'.
+**Step 2:** Expose a method or state trigger to clear `removedIds` (reset the arena) if the student answers incorrectly.
 
-**Step 1:** Refactor `balls` useMemo to return two separate arrays: `balls1` and `balls2`.
-**Step 2:** Position `balls1` to the left and `balls2` to the right initially.
-**Step 3:** Add a `phase` state ('separate' | 'merging').
-
-### Task 3: Collision Animation
-**Files:** 
-- Modify: `src/components/features/MathArena3D.tsx`
-
-**Step 1:** Use `useFrame` or `framer-motion-3d` to animate positions from (Left/Right) to (Center) when `phase` becomes 'merging'.
-**Step 2:** Trigger a scale "pulse" on collision.
-
-### Task 4: UI Integration (The "Play" Button)
-**Files:** 
-- Modify: `src/features/addition-subtraction/index.tsx`
-
-**Step 1:** Add a "Lihat Hasil" (See Result) button in the Learning controls.
-**Step 2:** Connect button to the `phase` state in `MathArena3D`.
+### Task 4: UI Integration ("Kirim Jawaban" Validation)
+**Files:** `src/features/addition-subtraction/index.tsx`
+**Step 1:** Replace the auto-validating logic in subtraction with a "Kirim Jawaban" button that appears during the Play phase.
+**Step 2:** On click, evaluate `removedIds.length === num2`.
+**Step 3:** If correct, show success, add score, and proceed. If wrong, trigger the existing `showWrong` state and reset the 3D arena.
 
 ---
 

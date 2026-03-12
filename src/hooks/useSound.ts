@@ -1,6 +1,6 @@
 import { useRef, useCallback } from 'react';
 
-type SoundType = 'click' | 'siren' | 'water' | 'fire' | 'engine' | 'success' | 'error';
+export type SoundType = 'click' | 'siren' | 'water' | 'fire' | 'engine' | 'success' | 'error';
 
 export const useSound = () => {
     const audioCtxRef = useRef<AudioContext | null>(null);
