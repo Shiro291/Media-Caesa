@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { BookOpen, Palette, FileText } from 'lucide-react';
 import MediaShell from '../../components/layout/MediaShell';
-import LearnSection from './LearnSection.tsx';
-import SandboxSection from './SandboxSection.tsx';
-import QuizSection from './QuizSection.tsx';
+
+const LearnSection = lazy(() => import('./LearnSection.tsx'));
+const SandboxSection = lazy(() => import('./SandboxSection.tsx'));
+const QuizSection = lazy(() => import('./QuizSection.tsx'));
 
 type Tab = 'learn' | 'sandbox' | 'quiz';
 
@@ -51,10 +52,17 @@ export default function Statistics() {
                 </div>
 
                 {/* Tab Content */}
-                <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 max-h-[calc(100vh-200px)] overflow-y-auto">
-                    {activeTab === 'learn' && <LearnSection />}
-                    {activeTab === 'sandbox' && <SandboxSection />}
-                    {activeTab === 'quiz' && <QuizSection />}
+                <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 lg:p-8 max-h-[calc(100vh-200px)] overflow-y-auto min-h-[400px]">
+                    <Suspense fallback={
+                        <div className="flex flex-col items-center justify-center h-[300px] gap-4">
+                            <div className="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
+                            <p className="text-gray-500 font-medium animate-pulse">Memuat materi...</p>
+                        </div>
+                    }>
+                        {activeTab === 'learn' && <LearnSection />}
+                        {activeTab === 'sandbox' && <SandboxSection />}
+                        {activeTab === 'quiz' && <QuizSection />}
+                    </Suspense>
                 </div>
             </div>
         </MediaShell>

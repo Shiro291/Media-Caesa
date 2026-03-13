@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MediaShell from '../../components/layout/MediaShell';
-import PlaceValueChart from '../../components/features/PlaceValueChart';
-import PlaceValueArrows from '../../components/features/PlaceValueArrows';
 import { useSound } from '../../hooks/useSound';
 import { getNumberFact, placeValueData } from '../../data/bilanganCacah';
 import { Link } from 'react-router-dom';
+
+const PlaceValueChart = lazy(() => import('../../components/features/PlaceValueChart'));
+const PlaceValueArrows = lazy(() => import('../../components/features/PlaceValueArrows'));
 
 export default function BilanganCacah() {
     const [number, setNumber] = useState(134);
@@ -69,12 +70,20 @@ export default function BilanganCacah() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
+                    className="min-h-[300px]"
                 >
-                    {mode === 'arrows' ? (
-                        <PlaceValueArrows value={number} />
-                    ) : (
-                        <PlaceValueChart value={number} />
-                    )}
+                    <Suspense fallback={
+                        <div className="flex flex-col items-center justify-center h-full min-h-[300px] gap-4">
+                            <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                            <p className="text-emerald-700 font-medium animate-pulse">Mempersiapkan alat main...</p>
+                        </div>
+                    }>
+                        {mode === 'arrows' ? (
+                            <PlaceValueArrows value={number} />
+                        ) : (
+                            <PlaceValueChart value={number} />
+                        )}
+                    </Suspense>
                 </motion.div>
 
                 {/* Advanced Interactive Controls */}

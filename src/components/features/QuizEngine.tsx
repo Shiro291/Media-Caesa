@@ -174,7 +174,7 @@ export default function QuizEngine({
 
                             <div className="h-48 md:h-64 flex items-center justify-center bg-gray-50 rounded-xl overflow-hidden border-2 border-dashed border-gray-200">
                                 {currentQ.img ? (
-                                    <img src={currentQ.img} alt="Question" loading="lazy" className="h-full object-contain" />
+                                    <img src={currentQ.img} alt="Question" loading="lazy" decoding="async" className="h-full object-contain" />
                                 ) : (
                                     <div className={`text-6xl whitespace-pre-wrap leading-relaxed ${currentQ.isShapeSelection ? '' : 'animate-pulse'}`}>
                                         {currentQ.emoji}

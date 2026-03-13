@@ -134,6 +134,7 @@ export default function MediaLibrary() {
                                 src={media.img}
                                 alt={media.title}
                                 loading="lazy"
+                                decoding="async"
                                 className="h-full object-contain transform group-hover:scale-110 transition duration-500"
                             />
                             <span className={`absolute top-4 right-4 bg-${media.color}-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm`}>

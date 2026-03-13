@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface PlaceValueChartProps {
     value: number;
 }
 
-export default function PlaceValueChart({ value }: PlaceValueChartProps) {
+export default memo(function PlaceValueChart({ value }: PlaceValueChartProps) {
     const hundreds = Math.floor(value / 100);
     const tens = Math.floor((value % 100) / 10);
     const units = value % 10;
@@ -97,4 +98,4 @@ export default function PlaceValueChart({ value }: PlaceValueChartProps) {
             </div>
         </div>
     );
-}
+});

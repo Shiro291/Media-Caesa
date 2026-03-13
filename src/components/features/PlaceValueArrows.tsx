@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 
 interface PlaceValueArrowsProps {
     value: number;
 }
 
-export default function PlaceValueArrows({ value }: PlaceValueArrowsProps) {
+export default memo(function PlaceValueArrows({ value }: PlaceValueArrowsProps) {
     const chars = value.toString().split('');
     const allPlaces = [
         { label: 'Ratusan', short: 'Rts', color: 'from-sky-500 to-blue-600', shadow: 'shadow-blue-200/50', border: 'border-blue-100' },
@@ -75,4 +76,4 @@ export default function PlaceValueArrows({ value }: PlaceValueArrowsProps) {
             </div>
         </div>
     );
-}
+});

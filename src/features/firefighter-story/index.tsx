@@ -18,6 +18,7 @@ const slides = [
                     src="/assets/firefighter/character.png"
                     alt="Budi Pemadam"
                     loading="lazy"
+                    decoding="async"
                     className="h-64 md:h-96 mx-auto drop-shadow-2xl cursor-pointer hover:scale-105 transition-transform"
                     onClick={() => playSound('success')}
                 />
@@ -67,7 +68,7 @@ const slides = [
             <div className="text-center space-y-4">
                 <h2 className="text-3xl text-brand-blue">Ayo Bersiap! 🧥</h2>
                 <div className="flex justify-center gap-4">
-                    <img src="/assets/firefighter/character.png" className="h-48" />
+                    <img src="/assets/firefighter/character.png" alt="Budi Bersiap" loading="lazy" decoding="async" className="h-48" />
                 </div>
                 <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
                     <button className="bg-white/10 p-4 rounded-lg hover:bg-white/20 transition" onClick={() => playSound('click')}>
@@ -129,7 +130,7 @@ const slides = [
             <div className="text-center space-y-6">
                 <h2 className="text-3xl text-blue-300">Semprotkan Air! 💦</h2>
                 <div className="flex items-center justify-center gap-8">
-                    <img src="/assets/firefighter/character.png" className="h-32" />
+                    <img src="/assets/firefighter/character.png" alt="Budi Menyemprot Air" loading="lazy" decoding="async" className="h-32" />
                     <div className="text-6xl">🚿</div>
                     <div className="text-4xl text-orange-500 animate-pulse">🔥</div>
                 </div>
