@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float } from '@react-three/drei';
+import { Float, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 const COLORS = {
@@ -16,10 +16,11 @@ interface MathBallProps {
     delay?: number;
     isRemoved?: boolean;
     onClick?: () => void;
+    emojiShape?: string | null;
 }
 
-function MathBall({ position, color, delay = 0, isRemoved = false, onClick }: MathBallProps) {
-    const meshRef = useRef<THREE.Mesh>(null);
+function MathBall({ position, color, delay = 0, isRemoved = false, onClick, emojiShape }: MathBallProps) {
+    const groupRef = useRef<THREE.Group>(null);
     const [active, setActive] = useState(false);
     const [hovered, setHovered] = useState(false);
 
@@ -30,28 +31,32 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick }: Ma
         return () => clearTimeout(timeout);
     }, [delay]);
 
-    useFrame((_state, delta) => {
-        if (!meshRef.current) return;
+    useFrame((state, delta) => {
+        if (!groupRef.current) return;
         
         const targetScale = (active && !isRemoved) ? (hovered ? 1.15 : 1) : 0.0001;
-        meshRef.current.scale.x = THREE.MathUtils.damp(meshRef.current.scale.x, targetScale, 15, delta);
-        meshRef.current.scale.y = THREE.MathUtils.damp(meshRef.current.scale.y, targetScale, 15, delta);
-        meshRef.current.scale.z = THREE.MathUtils.damp(meshRef.current.scale.z, targetScale, 15, delta);
+        groupRef.current.scale.x = THREE.MathUtils.damp(groupRef.current.scale.x, targetScale, 15, delta);
+        groupRef.current.scale.y = THREE.MathUtils.damp(groupRef.current.scale.y, targetScale, 15, delta);
+        groupRef.current.scale.z = THREE.MathUtils.damp(groupRef.current.scale.z, targetScale, 15, delta);
 
         if (active && !isRemoved) {
-            meshRef.current.rotation.y += delta * 0.6;
-            meshRef.current.rotation.z += delta * 0.2;
+            if (emojiShape) {
+                // Gentle wiggle for 2D emojis instead of full 3D rotation
+                groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 3 + delay) * 0.1;
+                groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2 + delay) * 0.1;
+            } else {
+                groupRef.current.rotation.y += delta * 0.6;
+                groupRef.current.rotation.z += delta * 0.2;
+            }
         }
     });
 
     return (
         <group position={position}>
-            <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                <mesh 
-                    ref={meshRef} 
+            <Float speed={2} rotationIntensity={emojiShape ? 0.2 : 0.5} floatIntensity={0.5}>
+                <group 
+                    ref={groupRef} 
                     scale={[0.0001, 0.0001, 0.0001]} 
-                    castShadow 
-                    receiveShadow
                     onClick={(e) => {
                         e.stopPropagation();
                         if (onClick && !isRemoved) onClick();
@@ -71,15 +76,38 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick }: Ma
                         }
                     }}
                 >
-                    <sphereGeometry args={[0.55, 32, 24]} />
-                    <meshStandardMaterial 
-                        color={color} 
-                        roughness={0.1} 
-                        metalness={0.4}
-                        emissive={color}
-                        emissiveIntensity={hovered && !isRemoved ? 0.6 : 0.4}
-                    />
-                </mesh>
+                    {emojiShape ? (
+                        <>
+                            {/* Invisible hit box for raycaster */}
+                            <mesh visible={false}>
+                                <sphereGeometry args={[0.7, 16, 16]} />
+                            </mesh>
+                            <Html center transform zIndexRange={[100, 0]}>
+                                <div 
+                                    className="pointer-events-none select-none text-6xl md:text-7xl transition-all duration-300"
+                                    style={{ 
+                                        filter: hovered && !isRemoved 
+                                            ? `drop-shadow(0 0 20px ${color}) scale(1.1)` 
+                                            : `drop-shadow(0 10px 10px rgba(0,0,0,0.3))` 
+                                    }}
+                                >
+                                    {emojiShape}
+                                </div>
+                            </Html>
+                        </>
+                    ) : (
+                        <mesh castShadow receiveShadow>
+                            <sphereGeometry args={[0.55, 32, 24]} />
+                            <meshStandardMaterial 
+                                color={color} 
+                                roughness={0.1} 
+                                metalness={0.4}
+                                emissive={color}
+                                emissiveIntensity={hovered && !isRemoved ? 0.6 : 0.4}
+                            />
+                        </mesh>
+                    )}
+                </group>
             </Float>
         </group>
     );
@@ -92,9 +120,10 @@ interface MathArena3DProps {
     phase: 'separate' | 'merging';
     removedIds?: number[];
     onToggleBall?: (id: number) => void;
+    emojiShape?: string | null;
 }
 
-function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall }: MathArena3DProps) {
+function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall, emojiShape }: MathArena3DProps) {
     const groupRef = useRef<THREE.Group>(null);
     const count = mode === 'addition' ? num1 + num2 : Math.max(0, num1 - num2);
     const { viewport } = useThree();
@@ -191,6 +220,7 @@ function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall }: M
                             delay={b.id} 
                             isRemoved={removedIds.includes(b.id)}
                             onClick={mode === 'subtraction' && onToggleBall ? () => onToggleBall(b.id) : undefined}
+                            emojiShape={emojiShape}
                         />
                     ))}
                     {mode === 'addition' && balls2.map((b) => (
@@ -199,19 +229,20 @@ function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall }: M
                             position={b.pos} 
                             color={COLORS.num2} 
                             delay={num1 + b.id} 
+                            emojiShape={emojiShape}
                         />
                     ))}
                 </>
             ) : (
                 <>
-                    {mergedBalls.map((b) => <MathBall key={`m-${b.id}`} position={b.pos} color={mode === 'addition' ? COLORS.merged : COLORS.num1} delay={b.id} />)}
+                    {mergedBalls.map((b) => <MathBall key={`m-${b.id}`} position={b.pos} color={mode === 'addition' ? COLORS.merged : COLORS.num1} delay={b.id} emojiShape={emojiShape} />)}
                 </>
             )}
         </group>
     );
 }
 
-export default function MathArena3D({ num1, num2, mode, phase, removedIds, onToggleBall }: MathArena3DProps) {
+export default function MathArena3D({ num1, num2, mode, phase, removedIds, onToggleBall, emojiShape }: MathArena3DProps) {
     return (
         <div className="w-full h-full bg-gradient-to-b from-sky-50 to-white rounded-[40px] overflow-hidden border-8 border-white shadow-[0_20px_50px_rgba(0,0,0,0.05),inset_0_-20px_30px_rgba(255,255,255,0.8)] relative group/arena">
             <Canvas camera={{ position: [0, 0, 12], fov: 45 }} resize={{ debounce: 0 }} dpr={1}>
@@ -219,7 +250,7 @@ export default function MathArena3D({ num1, num2, mode, phase, removedIds, onTog
                 <pointLight position={[10, 10, 10]} intensity={1.5} />
                 <pointLight position={[-10, -10, 5]} intensity={0.5} />
                 
-                <MathScene num1={num1} num2={num2} mode={mode} phase={phase} removedIds={removedIds} onToggleBall={onToggleBall} />
+                <MathScene num1={num1} num2={num2} mode={mode} phase={phase} removedIds={removedIds} onToggleBall={onToggleBall} emojiShape={emojiShape} />
             </Canvas>
             
             <div className="absolute top-6 right-6 flex gap-2 pointer-events-none">

@@ -57,6 +57,7 @@ export default function AdditionSubtraction() {
     const [userAnswer, setUserAnswer] = useState('');
     const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
     const [score, setScore] = useState(0);
+    const [emojiShape, setEmojiShape] = useState<string | null>(null);
 
     const generateQuestion = useCallback(() => {
         const op = Math.random() > 0.5 ? '+' : '-';
@@ -71,8 +72,12 @@ export default function AdditionSubtraction() {
         setQuizQuestion({ a, b, op });
         setUserAnswer('');
         setFeedback(null);
+        
+        const EMOJI_SHAPES = [null, '🔥', '💧', '🧑‍🚒', '🌱', '☁️', '🍔', '🍕', '⚽', '🚗', '🎈', '⭐', '🍎', '🐱', '🐶', '🚀', '🎸'];
+        setEmojiShape(EMOJI_SHAPES[Math.floor(Math.random() * EMOJI_SHAPES.length)]);
+        
         resetArena();
-    }, []);
+    }, [resetArena]);
 
     const checkAnswer = useCallback(() => {
         const correct = quizQuestion.op === '+' ? quizQuestion.a + quizQuestion.b : quizQuestion.a - quizQuestion.b;
@@ -93,7 +98,11 @@ export default function AdditionSubtraction() {
         setShowQuiz(val);
         resetArena();
         playSound('click');
-        if (val) generateQuestion();
+        if (val) {
+            generateQuestion();
+        } else {
+            setEmojiShape(null); // Reset shapes when going back to Learning mode
+        }
     }, [playSound, resetArena, generateQuestion]);
 
     return (
@@ -194,6 +203,7 @@ export default function AdditionSubtraction() {
                                             prev.includes(id) ? prev.filter(rId => rId !== id) : [...prev, id]
                                         )
                                     }}
+                                    emojiShape={showQuiz ? emojiShape : null} // ONLY active in Kuis Tantangan
                                 />
                             </Suspense>
                         </div>
