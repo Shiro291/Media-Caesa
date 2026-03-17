@@ -1,6 +1,6 @@
 import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Float, Html } from '@react-three/drei';
+import { Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 const COLORS = {
@@ -41,7 +41,7 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick, emoj
 
         if (active && !isRemoved) {
             if (emojiShape) {
-                // Gentle wiggle for 2D emojis instead of full 3D rotation
+                // Gentle wiggle for emoji instead of full 3D rotation
                 groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 3 + delay) * 0.1;
                 groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2 + delay) * 0.1;
             } else {
@@ -50,6 +50,21 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick, emoj
             }
         }
     });
+
+    // Build emoji as a canvas texture — pure 3D, NO Html DOM overlay, so raycasting/clicks work!
+    const emojiTexture = useMemo(() => {
+        if (!emojiShape) return null;
+        const size = 256;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d')!;
+        ctx.font = `${Math.floor(size * 0.72)}px serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(emojiShape, size / 2, size / 2);
+        return new THREE.CanvasTexture(canvas);
+    }, [emojiShape]);
 
     return (
         <group position={position}>
@@ -76,26 +91,17 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick, emoj
                         }
                     }}
                 >
-                    {emojiShape ? (
-                        <>
-                            {/* Invisible hit box for raycaster */}
-                            <mesh>
-                                <sphereGeometry args={[0.9, 16, 16]} />
-                                <meshBasicMaterial transparent opacity={0} depthWrite={false} color="#000000" />
-                            </mesh>
-                            <Html center transform zIndexRange={[100, 0]} style={{ pointerEvents: 'none' }}>
-                                <div 
-                                    className={`pointer-events-none select-none text-6xl md:text-7xl transition-all duration-300 flex items-center justify-center ${isRemoved ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}
-                                    style={{ 
-                                        filter: hovered && !isRemoved 
-                                            ? `drop-shadow(0 0 20px ${color}) scale(1.1)` 
-                                            : `drop-shadow(0 10px 10px rgba(0,0,0,0.3))` 
-                                    }}
-                                >
-                                    {emojiShape}
-                                </div>
-                            </Html>
-                        </>
+                    {emojiShape && emojiTexture ? (
+                        // Pure 3D plane mesh with canvas texture — no DOM overlay blocking clicks
+                        <mesh>
+                            <planeGeometry args={[1.5, 1.5]} />
+                            <meshBasicMaterial
+                                map={emojiTexture}
+                                transparent
+                                alphaTest={0.05}
+                                opacity={hovered && !isRemoved ? 1 : 0.92}
+                            />
+                        </mesh>
                     ) : (
                         <mesh castShadow receiveShadow>
                             <sphereGeometry args={[0.55, 32, 24]} />
@@ -135,7 +141,7 @@ function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall, emo
     }, []);
     
     const { balls1, balls2, mergedBalls, finalScale } = useMemo(() => {
-        const spacing = emojiShape ? 1.8 : 1.35;
+        const spacing = emojiShape ? 1.9 : 1.35;
         
         const getGrid = (n: number) => {
             const cols = Math.ceil(Math.sqrt(Math.max(1, n) * 1.1));
@@ -199,7 +205,7 @@ function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall, emo
             mergedBalls: generateBalls(count, gridM.cols, gridM.r, [0, 0, 0]),
             finalScale
         };
-    }, [num1, num2, count, mode, viewport.width, viewport.height]);
+    }, [num1, num2, count, mode, emojiShape, viewport.width, viewport.height]);
 
     useFrame((state) => {
         if (!groupRef.current) return;
