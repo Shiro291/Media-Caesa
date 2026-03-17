@@ -79,13 +79,16 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick, emoj
                     {emojiShape ? (
                         <>
                             {/* Invisible hit box for raycaster */}
-                            <mesh visible={false}>
+                            <mesh>
                                 <sphereGeometry args={[0.7, 16, 16]} />
+                                <meshBasicMaterial transparent opacity={0} depthWrite={false} color="#000000" />
                             </mesh>
                             <Html center transform zIndexRange={[100, 0]}>
                                 <div 
                                     className="pointer-events-none select-none text-6xl md:text-7xl transition-all duration-300"
                                     style={{ 
+                                        opacity: isRemoved ? 0 : 1,
+                                        transform: isRemoved ? 'scale(0)' : 'scale(1)',
                                         filter: hovered && !isRemoved 
                                             ? `drop-shadow(0 0 20px ${color}) scale(1.1)` 
                                             : `drop-shadow(0 10px 10px rgba(0,0,0,0.3))` 
