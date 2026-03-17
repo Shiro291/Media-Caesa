@@ -80,15 +80,13 @@ function MathBall({ position, color, delay = 0, isRemoved = false, onClick, emoj
                         <>
                             {/* Invisible hit box for raycaster */}
                             <mesh>
-                                <sphereGeometry args={[0.7, 16, 16]} />
+                                <sphereGeometry args={[0.9, 16, 16]} />
                                 <meshBasicMaterial transparent opacity={0} depthWrite={false} color="#000000" />
                             </mesh>
-                            <Html center transform zIndexRange={[100, 0]}>
+                            <Html center transform zIndexRange={[100, 0]} style={{ pointerEvents: 'none' }}>
                                 <div 
-                                    className="pointer-events-none select-none text-6xl md:text-7xl transition-all duration-300"
+                                    className={`pointer-events-none select-none text-6xl md:text-7xl transition-all duration-300 flex items-center justify-center ${isRemoved ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}
                                     style={{ 
-                                        opacity: isRemoved ? 0 : 1,
-                                        transform: isRemoved ? 'scale(0)' : 'scale(1)',
                                         filter: hovered && !isRemoved 
                                             ? `drop-shadow(0 0 20px ${color}) scale(1.1)` 
                                             : `drop-shadow(0 10px 10px rgba(0,0,0,0.3))` 
@@ -137,7 +135,7 @@ function MathScene({ num1, num2, mode, phase, removedIds = [], onToggleBall, emo
     }, []);
     
     const { balls1, balls2, mergedBalls, finalScale } = useMemo(() => {
-        const spacing = 1.35;
+        const spacing = emojiShape ? 1.8 : 1.35;
         
         const getGrid = (n: number) => {
             const cols = Math.ceil(Math.sqrt(Math.max(1, n) * 1.1));
